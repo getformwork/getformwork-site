@@ -1,0 +1,117 @@
+title: '{{page.page}}'
+
+options:
+    # Default page icon
+    icon: page
+
+layout:
+    type: sections
+
+    sections:
+        content:
+            label: '{{page.content}}'
+            active: true
+            fields: [title, description, content]
+
+        options:
+            collapsible: true
+            label: '{{page.options}}'
+            fields: [published, publishDate, unpublishDate, routable, listed, cacheable, prevNext]
+
+        attributes:
+            collapsible: true
+            collapsed: true
+            label: '{{page.attributes}}'
+            fields: [slug, parent, template]
+
+        files:
+            collapsible: true
+            collapsed: false
+            label: '{{page.files}}'
+            fields: [files]
+
+fields:
+    title:
+        type: text
+        class: form-input-large
+        label: '{{page.title}}'
+        required: true
+
+    content:
+        type: markdown
+        label: '{{page.text}}'
+
+    description:
+        type: markdown
+        label: Description
+        rows: 2
+
+    published:
+        type: checkbox
+        label: '{{page.status.published}}'
+        description: '{{page.status.published.description}}'
+        default: true
+
+    publishDate:
+        type: date
+        label: '{{page.publishDate}}'
+        placeholder: '{{date.noDate}}'
+        default: null
+
+    unpublishDate:
+        type: date
+        label: '{{page.unpublishDate}}'
+        placeholder: '{{date.noDate}}'
+        default: null
+
+    routable:
+        type: checkbox
+        label: '{{page.routable}}'
+        description: '{{page.routable.description}}'
+        default: true
+
+    listed:
+        type: checkbox
+        label: '{{page.listed}}'
+        description: '{{page.listed.description}}'
+        default: true
+
+    cacheable:
+        type: checkbox
+        label: '{{page.cacheable}}'
+        default: true
+
+    prevNext:
+        type: checkbox
+        label: Previous and next links
+        default: false
+
+    slug:
+        type: slug
+        label: '{{page.slug}}'
+        suggestion: '{{page.slug.suggestion}}'
+        required: true
+        readonly@: page.isSlugReadonly
+        source: title
+        autoUpdate: false
+
+    parent:
+        type: page
+        label: '{{page.parent}}'
+        required: true
+        collection@: site.descendants.allowingChildren.withoutPageAndDescendants(page)
+        allowSite: true
+
+    template:
+        type: template
+        required: true
+        label: '{{page.template}}'
+        default@: site.get('defaultTemplate', 'default')
+
+    files:
+        type: upload
+        label: '{{page.files}}'
+        autoUpload: true
+        multiple: true
+        listFiles: true
+        collection@: page.files

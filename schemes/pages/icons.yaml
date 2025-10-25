@@ -1,0 +1,8 @@
+title: Icons
+
+# Extend the `page` scheme
+extend: pages.page
+
+fields:
+    prevNext:
+        default: true

@@ -1,0 +1,8 @@
+tocGenerator:
+    enabled: true
+
+makedoc:
+    enabled: true
+
+commonmarkCallout:
+    enabled: true

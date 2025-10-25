@@ -1,0 +1,4 @@
+title: '{{user.role.admin}}'
+
+permissions:
+    panel: true

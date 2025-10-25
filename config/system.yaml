@@ -1,0 +1,37 @@
+pages:
+    content:
+        allowHtml: true
+        addHeadingIds: true
+        commonmarkExtensions:
+            League\CommonMark\Extension\SmartPunct\SmartPunctExtension:
+                enabled: true
+                config:
+                    smartpunct:
+                        double_quote_opener: “
+                        double_quote_closer: ”
+                        single_quote_opener: ‘
+                        single_quote_closer: ’
+            League\CommonMark\Extension\Table\TableExtension:
+                enabled: true
+                config:
+                    table:
+                        wrap:
+                            enabled: true
+                            tag: div
+                            attributes:
+                                class: table-wrapper
+            Formwork\Plugins\CommonMarkCallout\CalloutExtension:
+                enabled: true
+files:
+    allowedExtensions:
+        - .jpg
+        - .jpeg
+        - .png
+        - .gif
+        - .svg
+        - .webp
+        - .mp4
+        - .webm
+
+plugins:
+    enabled: true

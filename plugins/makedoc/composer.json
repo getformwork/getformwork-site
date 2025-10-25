@@ -1,0 +1,10 @@
+{
+    "require": {
+        "phpstan/phpdoc-parser": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Formwork\\Plugins\\MakeDoc\\": "src/"
+        }
+    }
+}

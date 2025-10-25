@@ -1,0 +1,4 @@
+title: API Documentation Index
+
+# Extend the `page` scheme
+extend: pages.page

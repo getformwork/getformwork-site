@@ -1,0 +1,16 @@
+title: Home Page
+
+# Extend the `page` scheme
+extend: pages.page
+
+layout:
+    type: sections
+
+    sections:
+        content:
+            fields: [title, description, content, heroImage]
+
+fields:
+    heroImage:
+        type: image
+        label: Hero Image

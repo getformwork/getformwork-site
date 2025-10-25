@@ -1,0 +1,10 @@
+{
+    "require": {
+        "masterminds/html5": "^2.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Formwork\\Plugins\\TocGenerator\\": "src/"
+        }
+    }
+}
