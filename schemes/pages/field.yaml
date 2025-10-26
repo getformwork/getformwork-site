@@ -1,0 +1,8 @@
+title: Field Documentation
+
+extend: pages.api
+
+fields:
+    screenshot:
+      type: image
+      label: Screenshot

@@ -2,7 +2,7 @@
 
 $isSummary = $page->get('documentation.summary', false);
 
-$baseUri = $page->parent()->template()->name() === 'api'
+$baseUri = $page->parent()->template()->name() === 'field'
     ? $page->parent()->uri()
     : $page->uri();
 

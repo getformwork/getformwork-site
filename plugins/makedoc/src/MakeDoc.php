@@ -63,7 +63,7 @@ class MakeDoc
         ksort($methods);
 
         foreach ($methods as $name => $value) {
-            if (in_array($name, ['validate', 'return', 'toString', 'setValue'], true)) {
+            if (in_array($name, ['return', 'toString', 'setValue'], true)) {
                 continue;
             }
             $output[] = '<div>';
