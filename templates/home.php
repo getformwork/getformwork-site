@@ -4,11 +4,17 @@
         <div class="container">
             <h1><mark>Your site. With simplicity.</mark></h1>
             <p>Formwork is a simple, fast and flexible flat-file CMS that allows you to create and manage your website without the need for a database.</p>
+            <div class="hero-actions">
+                <a class="hero-button" href="https://github.com/getformwork/formwork/releases/download/<?= $latestRelease ?>/formwork-<?= $latestRelease ?>.zip">Download <strong>Formwork <?= $latestRelease ?></strong></a>
+                <div class="version-notes">Released <strong><?= $latestReleaseDaysAgo ?></strong> • <a href="https://github.com/getformwork/formwork/blob/<?= $latestRelease ?>/CHANGELOG.md">Changelog</a></div>
+            </div>
         </div>
     </section>
-    <div class="hero-image">
-        <div class="container"><img width="1000" src="<?= $page->heroImage()?->toWebp()->uri() ?>"></div>
-    </div>
+    <?php if ($heroImage = $page->heroImage()): ?>
+        <div class="hero-image">
+            <div class="container"><img width="1000" height="<?= floor($heroImage->info()->height() * 1000 / $heroImage->info()->width()) ?>" src="<?= $heroImage->toWebp()->uri() ?>" style="background-image: url(<?= $heroImage->resize(64)->blur(100)->toWebp()->uri() ?>);"></div>
+        </div>
+    <?php endif; ?>
     <section class="features">
         <div class="container">
             <div class="row">

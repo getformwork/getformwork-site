@@ -481,7 +481,7 @@ mark {
 
 .toc ol {
     list-style-type: decimal;
-    margin-left: 1.5rem;
+    margin-left: 1.75rem;
 }
 
 .toc ol ol {
@@ -557,6 +557,29 @@ mark {
 .hero-image img {
     border-radius: var(--border-radius);
     box-shadow: 0px 0 2rem rgba(29, 29, 35, 0.4);
+    background-color: var(--color-gray-800);
+    background-size: cover;
+}
+
+.hero-button {
+    display: inline-block;
+    border-radius: var(--border-radius);
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+    color: var(--color-white);
+    background: var(--formwork-gradient);
+    background-position: center;
+    background-size: 110%;
+    border: 0.25rem solid transparent;
+    box-shadow: 0px 0 0.75rem rgba(29, 29, 35, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.hero-button:hover {
+    text-decoration: none;
+    color: var(--color-purple-500);
+    background: transparent;
+    border-color: var(--color-purple-500);
 }
 
 .hero h1 {
@@ -569,6 +592,16 @@ mark {
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     text-wrap: balance;
+}
+
+.hero-actions {
+    margin: 1rem 0 2rem;
+}
+
+.version-notes {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: var(--color-gray-400);
 }
 
 .features {
