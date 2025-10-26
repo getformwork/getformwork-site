@@ -32,6 +32,8 @@ files:
         - .webp
         - .mp4
         - .webm
-
 plugins:
     enabled: true
+cache:
+    enabled: true
+    time: 86400
