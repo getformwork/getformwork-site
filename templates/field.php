@@ -64,6 +64,10 @@
                     <?= $this->block('api') ?>
                 </article>
                 <?= $this->insert('_prev-next') ?>
+                <footer class="page-footer">
+                    <?php $this->insert('_suggest-edit') ?>
+                </footer>
             </div>
         </div>
+    </div>
 </main>

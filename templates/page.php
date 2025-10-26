@@ -6,6 +6,9 @@
     <?= $page->content() ?>
 </article>
 <?= $this->insert('_prev-next') ?>
+<footer class="page-footer">
+    <?php $this->insert('_suggest-edit') ?>
+</footer>
 <?php $this->end() ?>
 
 <main>
