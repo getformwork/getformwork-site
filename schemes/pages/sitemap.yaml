@@ -1,0 +1,62 @@
+title: Sitemap
+
+options:
+    icon: sitemap
+
+layout:
+    type: sections
+
+    sections:
+        content:
+            label: Sitemap
+            active: true
+            fields: [exclude]
+
+        options:
+            collapsible: true
+            label: '{{page.options}}'
+            fields: [published, cacheable]
+
+        attributes:
+            collapsible: true
+            collapsed: true
+            label: '{{page.attributes}}'
+            fields: [slug, parent, template]
+
+fields:
+    exclude:
+        type: array
+        label: Pages to exclude
+        description: List of page routes to exclude from the sitemap. The sitemap itself is always excluded.
+
+    published:
+        type: checkbox
+        label: '{{page.status.published}}'
+        default: true
+
+    cacheable:
+        type: checkbox
+        label: '{{page.cacheable}}'
+        default: true
+
+    slug:
+        type: slug
+        label: '{{page.slug}}'
+        suggestion: '{{page.slug.suggestion}}'
+        required: true
+        readonly@: page.isSlugReadonly
+        source: title
+        autoUpdate: false
+
+    parent:
+        type: page
+        label: '{{page.parent}}'
+        required: true
+        collection@: site.descendants.allowingChildren.withoutPageAndDescendants(page)
+        allowSite: true
+
+    template:
+        type: template
+        required: true
+        label: '{{page.template}}'
+        default@: site.get('defaultTemplate', 'default')
