@@ -5,6 +5,7 @@ documentation:
         images:
             type: images
 description: 'Multiple image selector with previews.'
+screenshot: images.png
 ---
 The **images** field allows users to select multiple images from a predefined list of options.  
 Selected images are displayed as tags, and their order can be optionally rearranged.

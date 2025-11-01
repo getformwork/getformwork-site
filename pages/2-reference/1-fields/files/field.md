@@ -5,6 +5,7 @@ documentation:
         files:
             type: files
 description: 'Multiple file references.'
+screenshot: files.png
 ---
 The **files** field allows users to select multiple files from a predefined list of options.  
 Selected files are displayed as tags, and the order can be optionally rearranged.

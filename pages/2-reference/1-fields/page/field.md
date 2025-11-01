@@ -5,6 +5,7 @@ documentation:
         page:
             type: page
 description: 'Reference to a site page.'
+screenshot: page.png
 ---
 The **page** field allows users to select a single page from the site’s page collection.  
 It supports optional inclusion of the site root and can display page hierarchy with icons.

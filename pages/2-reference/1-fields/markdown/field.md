@@ -5,6 +5,7 @@ documentation:
         markdown:
             type: markdown
 description: 'Rich text with Markdown formatting.'
+screenshot: markdown.png
 ---
 The **markdown** field allows users to enter rich text content using Markdown syntax.  
 It supports images, links, and other media through integrated modals, and provides a toolbar for toggling Markdown mode.

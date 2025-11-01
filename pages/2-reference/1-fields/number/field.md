@@ -5,6 +5,7 @@ documentation:
         number:
             type: number
 description: 'Integer or decimal value.'
+screenshot: number.png
 ---
 The **number** field allows users to enter a numeric value.  
 It supports minimum, maximum, and step constraints for precise input control.

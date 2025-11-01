@@ -5,6 +5,7 @@ documentation:
         email:
             type: email
 description: 'A field for email addresses.'
+screenshot: email.png
 ---
 The **email** field allows users to enter a valid email address and supports HTML5 email validation.  
 Optional attributes like minimum and maximum length, pattern, and autocomplete can be configured.

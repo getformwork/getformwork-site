@@ -5,6 +5,7 @@ documentation:
         file:
             type: file
 description: 'Single file reference.'
+screenshot: file.png
 ---
 The **file** field allows users to select a file from a predefined list of options.  
 Each option can include an icon or thumbnail to provide a visual preview.

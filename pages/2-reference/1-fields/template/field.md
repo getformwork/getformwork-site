@@ -5,6 +5,7 @@ documentation:
         template:
             type: template
 description: 'Page template selector.'
+screenshot: template.png
 ---
 The **template** field allows users to select a single template from the available site templates.  
 

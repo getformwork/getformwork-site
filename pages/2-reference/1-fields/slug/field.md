@@ -5,6 +5,7 @@ documentation:
         slug:
             type: slug
 description: 'URL-friendly identifier. It can use a reference field to get the value.'
+screenshot: slug.png
 ---
 The **slug** field allows users to create a URL-friendly string, often used for page or content identifiers.  
 It can automatically generate a slug from a source field, and supports manual editing if not readonly.

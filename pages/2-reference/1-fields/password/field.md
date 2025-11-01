@@ -5,6 +5,7 @@ documentation:
         password:
             type: password
 description: 'Masked text for sensitive input.'
+screenshot: password.png
 ---
 The **password** field allows users to enter a secure password.  
 It supports optional minimum and maximum length, pattern validation, and autocomplete control.

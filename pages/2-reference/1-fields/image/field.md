@@ -5,6 +5,7 @@ documentation:
         image:
             type: image
 description: 'Single image selector with preview.'
+screenshot: image.png
 ---
 The **image** field allows users to select a single image from a predefined list of options.  
 Each option can include an icon or a thumbnail to provide a visual preview.
