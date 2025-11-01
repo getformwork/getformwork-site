@@ -88,6 +88,7 @@ class MakeDoc
             'paramsDescription' => [],
             'returnDescription' => '',
             'internal'          => false,
+            'since'             => null,
         ];
 
         foreach ($phpDocNode->children as $child) {
@@ -105,6 +106,9 @@ class MakeDoc
                 }
                 if ($child->name === '@internal') {
                     $result['internal'] = true;
+                }
+                if ($child->name === '@since' && $child->value) {
+                    $result['since'] = $child->value;
                 }
             }
         }
@@ -286,6 +290,11 @@ class MakeDoc
             $returnType = sprintf('<span class="type-name">%s</span>', $declaringClass);
         } else {
             $returnType = '<span class="type-keyword">mixed</span>';
+        }
+
+        if ($doc['since']) {
+            $output[] = '<h4>Since</h4>';
+            $output[] = sprintf('Formwork <a href="https://github.com/getformwork/formwork/blob/%s/CHANGELOG.md">%1$s</a>', $doc['since']);
         }
 
         $output[] = '<h4>Return type</h4>';
