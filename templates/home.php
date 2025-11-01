@@ -12,7 +12,9 @@
     </section>
     <?php if ($heroImage = $page->heroImage()): ?>
         <div class="hero-image">
-            <div class="container"><img width="1000" height="<?= floor($heroImage->info()->height() * 1000 / $heroImage->info()->width()) ?>" src="<?= $heroImage->toWebp()->uri() ?>" style="background-image: url(<?= $heroImage->resize(64)->blur(100)->toWebp()->uri() ?>);"></div>
+            <div class="container">
+                <img width="<?= $heroImage->width() ?>" height="<?= $heroImage->height() ?>" src="<?= $heroImage->toWebp()->uri() ?>" style="background-image: url(<?= $heroImage->resize(64)->blur(100)->toWebp()->uri() ?>);">
+            </div>
         </div>
     <?php endif; ?>
     <section class="features">

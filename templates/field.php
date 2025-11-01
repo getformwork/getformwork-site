@@ -2,7 +2,7 @@
 
 <?php $this->define('api') ?>
 <?php if ($page->screenshot()): ?>
-    <img class="screenshot" src="<?= $page->screenshot()->toWebp()->uri() ?>">
+    <img class="screenshot" width="<?= $page->screenshot()->width() ?>" height="<?= $page->screenshot()->height() ?>" src="<?= $page->screenshot()->toWebp()->uri() ?>">
 <?php endif ?>
 <?= $page->content() ?>
 <?php if (!$isSummary): ?>
