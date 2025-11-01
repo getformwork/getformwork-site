@@ -269,7 +269,7 @@ Handles update checks, downloaded update storage, automatic backup, and cleanup 
 | Option | Type | Description | Default |
 |--------|------|-------------|---------|
 | `updates.time` | <code><span class="type-number">int</span></code> | Time in seconds between update checks | `900` |
-| `updates.force` | <code><span class="type-bool">bool</span></code> | Always check for updates regardless of cache | `true` |
+| `updates.force` | <code><span class="type-bool">bool</span></code> | Always check for updates regardless of cache | `false` |
 | `updates.tempFile` | <code><span class="type-string">string</span></code> | Temporary file used for downloaded updates | `${%ROOT_PATH%}/.formwork-update.zip` |
 | `updates.preferDistAssets` | <code><span class="type-bool">bool</span></code> | Prefer using pre-built assets when updating | `true` |
 | `updates.backupBefore` | <code><span class="type-bool">bool</span></code> | Create backup before updating | `true` |

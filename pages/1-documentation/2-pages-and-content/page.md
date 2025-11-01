@@ -142,9 +142,18 @@ Most of these fields are also rendered as input controls in the Panel, allowing 
 |`metadata`|<code><span class="type-keyword">array</span></code>|Associative array of custom meta tags, including Open Graph or SEO values.|`[]`|
 |`icon`|<code><span class="type-string">string</span>\|<span class="type-null">null</span></code>|Optional icon name to display next to the page in the Panel.|`null`|
 
-
 > [!NOTE]
 > The <code>listed</code> and <code>searchable</code> fields are <em>descriptive flags</em> meant to be used in your templates. They do not trigger any default behavior. For example, if a page is marked as <code>listed: false</code>, it is up to your navigation template to omit it manually. Similarly, <code>searchable: false</code> pages must be excluded from search results explicitly by your logic.
+
+#### Cache-related fields
+Since Formwork **2.1.0**, pages can define their cache settings using the following fields:
+|Field|Type|Description|Default|
+|--|--|--|--|
+|`cache.time`|<code><span class="type-number">int</span></code>|<code><span class="type-number">int</span></code>|Duration (in seconds) for which the page should be cached. If not set, the global cache duration from [site options](../site-options/#cache) is used.|`null`|
+
+> [!TIP]
+> Defining a `cache.time` value allows you to fine-tune caching behavior on a per-page basis, optimizing performance for static pages while ensuring dynamic content remains fresh.
+> For example, a homepage with dynamic content fetched within a [template controller](../templates/#template-controllers) might benefit from a shorter cache duration, while a static blog post could have a longer cache time.
 
 ### Custom fields
 

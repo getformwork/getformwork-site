@@ -73,6 +73,7 @@ Common options include:
 |`allowTags`|<code><span class="type-bool">bool</span></code>|Controls whether tags are available for pages using this template, making the tags route reachable|
 |`num`|<code><span class="type-string">string</span></code>|The page numbering mode|
 |`children`|<code><span class="type-keyword">array</span></code>\|<code><span class="type-bool">bool</span></code>|Specifies settings for child pages (see below)|
+|`imagePreviewField`|<code><span class="type-string">string</span></code>|The name of an [`image` field](/reference/fields/image/) to be used as preview thumbnail in the Panel page list|
 
 > [!NOTE]
 > If you want to use pagination and/or tags using routes like `/notes/page/3/`, `/posts/tag/recipes/` or `/photos/tag/landscape/page/2/` you have to enable the `allowPagination` and `allowTags` respectively.
@@ -92,6 +93,7 @@ Here in detail the `children` options currently handled by Formwork:
 |`templates`|<code><span class="type-keyword">array</span></code>|Limits which templates can be used by children of this page|
 |`reverse`|<code><span class="type-bool">bool</span></code>|Displays children in reverse order in the Panel|
 |`orderable`|<code><span class="type-bool">bool</span></code>|If `false`, disables drag-and-drop sorting for children in the Panel|
+|`subtree`|<code><span class="type-bool">bool</span></code>|Since **2.1.0**. If `true` children pages are not visible in the main site tree in the Panel but in their own page, allowing tree navigation|
 
 For example you have a `blog` content model which contains only `post` pages, and you want to prevent users from assigning unrelated templates as children, you also want to disable manual sorting, since posts are ordered by publish date and then display them in reverse order. Your `options` section in the `blog` scheme will be like this:
 
