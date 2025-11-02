@@ -59,7 +59,7 @@ Once installed, you can open the project in your browser or use the built-in ser
 > [!NOTE]
 > This step is only necessary if you installed Formwork via Composer. If you downloaded the prebuilt release, the assets are already built.
 
-* Install [Node.js](https://nodejs.org/) and [Yarn](https://yarnpkg.com/)
+* Install [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/)
 * Navigate to the `📂 panel` directory:
 
    ```shell
@@ -68,12 +68,12 @@ Once installed, you can open the project in your browser or use the built-in ser
 * Install dependencies:
 
    ```shell
-   yarn install
+   pnpm install
    ```
 * Build the assets:
 
    ```shell
-   yarn build
+   pnpm build
    ```
 
 
