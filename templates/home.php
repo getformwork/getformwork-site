@@ -6,7 +6,7 @@
             <p>Formwork is a simple, fast and flexible flat-file CMS that allows you to create and manage your website without the need for a database.</p>
             <div class="hero-actions">
                 <a class="hero-button" href="https://github.com/getformwork/formwork/releases/download/<?= $latestRelease ?>/formwork-<?= $latestRelease ?>.zip">Download <strong>Formwork <?= $latestRelease ?></strong></a>
-                <div class="version-notes">Released <strong><?= $latestReleaseDaysAgo ?></strong> • <a href="https://github.com/getformwork/formwork/blob/<?= $latestRelease ?>/CHANGELOG.md">Changelog</a></div>
+                <div class="version-notes">Released <strong><time datetime="<?= gmdate('Y-m-d\Th:i:s\Z', $latestReleaseTimestamp) ?>"><?= $latestReleaseDaysAgo ?></time></strong> • <a href="https://github.com/getformwork/formwork/blob/<?= $latestRelease ?>/CHANGELOG.md">Changelog</a></div>
             </div>
         </div>
     </section>

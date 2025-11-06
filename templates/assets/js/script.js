@@ -30,6 +30,11 @@ window.addEventListener("load", function () {
             });
         });
     }
+
+    document.querySelectorAll("time").forEach((timeElem) => {
+        const datetime = timeElem.getAttribute("datetime");
+        timeElem.title = new Date(datetime).toUTCString();
+    });
 });
 
 const helpers = {
