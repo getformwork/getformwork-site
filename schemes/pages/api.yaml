@@ -3,9 +3,16 @@ title: API Documentation
 # Extend the `page` scheme
 extend: pages.page
 
+layout:
+    sections:
+        attributes:
+            fields: [slug, parent, template, prevNext, toc.autoGenerate]
+
 fields:
     prevNext:
         default: true
+
     toc.autoGenerate:
         type: checkbox
-        default: false
+        label: Auto-generate Table of Contents
+        default: true

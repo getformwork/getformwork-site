@@ -2,7 +2,12 @@ title: Field Documentation
 
 extend: pages.api
 
+layout:
+    sections:
+        page:
+            fields: [title, description, screenshot, content]
+
 fields:
     screenshot:
-      type: image
-      label: Screenshot
+        type: image
+        label: Screenshot

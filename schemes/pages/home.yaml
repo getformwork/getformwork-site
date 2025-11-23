@@ -4,10 +4,8 @@ title: Home Page
 extend: pages.page
 
 layout:
-    type: sections
-
     sections:
-        content:
+        page:
             fields: [title, description, content, heroImage]
 
 fields:
