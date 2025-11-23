@@ -46,10 +46,12 @@
     <div class="container">
         <div class="row">
             <div class="col-1-4 show-from-md">
-                <nav class="toc">
-                    <div class="toc-header h6">Table of Contents</div>
-                    <?php $this->insert('_toc', ['content' => $this->block('api'), 'levels' => $page->get('toc.levels', [1, 2, 3])]) ?>
-                </nav>
+                <?php if ($page->get('toc.autoGenerate', true)): ?>
+                    <nav class="toc">
+                        <div class="toc-header h6">Table of Contents</div>
+                        <?php $this->insert('_toc', ['content' => $this->block('api'), 'levels' => $page->get('toc.levels', [1, 2, 3])]) ?>
+                    </nav>
+                <?php endif ?>
             </div>
             <div class="col-3-4">
                 <article>

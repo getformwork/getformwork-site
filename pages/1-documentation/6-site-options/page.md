@@ -32,6 +32,71 @@ Enables multilingual functionality. You can define available languages and let t
 | `languages.available` | <code><span class="type-keyword">array</span></code> | List of supported language codes (e.g., `['en', 'it']`) | `[]` |
 | `languages.httpPreferred` | <code><span class="type-bool">bool</span></code> | Enable automatic language detection via HTTP headers | `false` |
 
+## Taxonomies
+<span class="badge badge-yellow">Since 2.2.0</span>
+
+Defines site-wide taxonomies like tags and categories that can be used to organize and classify content.
+| Option | Type | Description | Default |
+|--------|------|-------------|---------|
+| `taxonomies` | <code><span class="type-keyword">array</span></code> | List of taxonomy names to enable (e.g., `['tags', 'categories']`) | `[]` |
+
+### Using taxonomies
+To use taxonomies in your page schemes, enable the [`allowTaxonomy` option](../page-schemes/#options-section) in the desired schemes. This will make the taxonomy routes reachable for those page types.
+
+To display taxonomy terms and associated pages on the frontend, you need to implement the necessary logic in your templates by defining a controller.
+
+For example, you have a `blog` content model and you want to use `tags` as taxonomy. First, enable `tags` in the site options:
+
+```yaml
+taxonomies: ['tags']
+```
+
+Then, in the `blog` page scheme, enable the `allowTaxonomy` option:
+```yaml
+options:
+  allowTaxonomy: true
+```
+
+Finally, create a `blog.php` [template controller](../templates/#template-controllers) in the `📁 site/controllers` directory to handle displaying posts by tag from the `{taxonomy}` and `{taxonomyTerm}` route parameters:
+
+```php
+// Posts are the published children of the blog page
+$posts = $page->children()->published();
+
+// If the route has the param `{taxonomy}`
+if ($router->params()->has('taxonomy')) {
+    // Filter posts by the taxonomy term provided in the `{taxonomyTerm}` param
+    $posts = $posts->havingTaxonomy(
+        [$router->params()->get('taxonomy') => [$router->params()->get('taxonomyTerm')]],
+        slug: true // Use slugs for matching terms
+    );
+}
+
+return ['posts' => $posts];
+```
+This controller retrieves the published child pages of the `blog` page, filters them based on the taxonomy term provided in the route parameters, and passes the filtered collection to the template as the `$posts` variable.
+>[!NOTE]
+> Use the `slug: true` argument in `havingTaxonomy()` to match terms by their slugs and not the term itself. This takes into account that taxonomy terms can have spaces or special characters.
+> It is recommended to always use slugs for matching terms from route parameters like in the example above.
+
+In the template, you can then loop through the filtered `$posts` collection. For example:
+
+```php
+<?php foreach ($posts as $post): ?>
+    <h2><a href="<?= $post->uri() ?>"><?= $post->title() ?></a></h2>
+    <p><?= $post->summary() ?></p>
+<?php endforeach ?>
+```
+
+> [!TIP]
+> The `havingTaxonomy()` method can be used on any `PageCollection` to filter pages based on assigned taxonomy terms. It accepts also multiple taxonomies at once. For example, to get pages tagged (with the `tag` taxonomy) with either `recipes` or `travel` and categorized (`category` taxonomy) under `food`:
+> ```php
+> $pages->havingTaxonomy([
+>     'tags'       => ['recipes', 'travel'],
+>     'categories' => ['food'],
+> ]);
+> ```
+
 ## Maintenance mode
 Lets you temporarily disable your public site and show a custom maintenance page to visitors while preserving access for administrators and panel users.
 

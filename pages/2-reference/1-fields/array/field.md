@@ -27,3 +27,5 @@ If `associative` is set to `false`, the array will be indexed (a simple list of 
 |`associative`|<code><span class="type-bool">bool</span></code>|If `true`, enables key–value pairs; if `false`, a simple list of values is shown.|`false`|
 |`placeholderKey`|<code><span class="type-string">string</span></code>|Placeholder text for the key input (only visible if `associative` is `true`).|`''`|
 |`placeholderValue`|<code><span class="type-string">string</span></code>|Placeholder text for the value input.|`''`|
+|`items`|<code><span class="type-keyword">array</span></code>|<span class="badge badge-yellow">Since 2.2.0</span> Defines the field used for each item in the array. Must be a valid field definition.|`['type' => 'text']`|
+|`allowEmptyValues`|<code><span class="type-bool">bool</span></code>|<span class="badge badge-yellow">Since 2.2.0</span> Only for associative array fields. If `true`, allows empty values in the array.|`false`|

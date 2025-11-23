@@ -28,6 +28,9 @@
                     <?php $p = $page->children()->find(fn($page) => $page->slug() === $type) ?>
                     <?php if ($p): ?>
                         <?= $p->description() ?>
+                        <?php if ($p->screenshot()): ?>
+                            <img class="screenshot" width="<?= $p->screenshot()->width() ?>" height="<?= $p->screenshot()->height() ?>" src="<?= $p->screenshot()->toWebp()->uri() ?>" loading="lazy">
+                        <?php endif ?>
                     <?php endif ?>
                 <?php endif ?>
                 <?= $makedoc->generateFieldDocumentation($alias, $type) ?>
@@ -36,7 +39,7 @@
             <?php foreach ($data as ['alias' => $alias, 'resource' => $resource]): ?>
                 <?php $functions = Formwork\Cms\App::instance()->getService(Formwork\Services\Container::class)->call(require ROOT_PATH . $resource) ?>
                 <?php ksort($functions) ?>
-                <div class="methods">
+                <div class=" methods">
                     <?php foreach ($functions as $name => $closure): ?>
                         <div>
                             <?= $makedoc->generateFunctionDocumentation(new ReflectionFunction($closure), $alias, $name, outputLinks: false) ?>

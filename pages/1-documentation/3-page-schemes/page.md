@@ -70,13 +70,14 @@ Common options include:
 |--|--|--|
 |`icon`|<code><span class="type-string">string</span></code>|The icon shown in the Panel page list|
 |`allowPagination`|<code><span class="type-bool">bool</span></code>|Enables support for pagination on this page type, making the pagination route reachable|
-|`allowTags`|<code><span class="type-bool">bool</span></code>|Controls whether tags are available for pages using this template, making the tags route reachable|
+|`allowTags`|<code><span class="type-bool">bool</span></code>|<span class="badge badge-red">Deprecated since 2.2.0</span> Controls whether tags are available for pages using this template, making the tags route reachable. Use `allowTaxonomy` instead|
+|`allowTaxonomy`|<code><span class="type-bool">bool</span></code>|<span class="badge badge-yellow">Since 2.2.0</span> Enables the routes for th taxonomies defined in the [site options](../site-options/#taxonomies) (tags, categories, etc.)|
 |`num`|<code><span class="type-string">string</span></code>|The page numbering mode|
 |`children`|<code><span class="type-keyword">array</span></code>\|<code><span class="type-bool">bool</span></code>|Specifies settings for child pages (see below)|
 |`imagePreviewField`|<code><span class="type-string">string</span></code>|The name of an [`image` field](/reference/fields/image/) to be used as preview thumbnail in the Panel page list|
 
 > [!NOTE]
-> If you want to use pagination and/or tags using routes like `/notes/page/3/`, `/posts/tag/recipes/` or `/photos/tag/landscape/page/2/` you have to enable the `allowPagination` and `allowTags` respectively.
+> If you want to use pagination and/or taxonomy using routes like `/notes/page/3/`, `/posts/tag/recipes/` or `/photos/tag/landscape/page/2/` you have to enable the `allowPagination` and `allowTaxonomy` respectively.
 >
 > Otherwise, and by default, Formwork tries to resolve all the route segments to a page, leading to 404 errors.
 
@@ -93,7 +94,7 @@ Here in detail the `children` options currently handled by Formwork:
 |`templates`|<code><span class="type-keyword">array</span></code>|Limits which templates can be used by children of this page|
 |`reverse`|<code><span class="type-bool">bool</span></code>|Displays children in reverse order in the Panel|
 |`orderable`|<code><span class="type-bool">bool</span></code>|If `false`, disables drag-and-drop sorting for children in the Panel|
-|`subtree`|<code><span class="type-bool">bool</span></code>|Since **2.1.0**. If `true` children pages are not visible in the main site tree in the Panel but in their own page, allowing tree navigation|
+|`subtree`|<code><span class="type-bool">bool</span></code>|<span class="badge badge-yellow">Since 2.1.0</span> If `true` children pages are not visible in the main site tree in the Panel but in their own page, allowing tree navigation|
 
 For example you have a `blog` content model which contains only `post` pages, and you want to prevent users from assigning unrelated templates as children, you also want to disable manual sorting, since posts are ordered by publish date and then display them in reverse order. Your `options` section in the `blog` scheme will be like this:
 
@@ -110,7 +111,7 @@ options:
 
 ## Layout section
 
-The `layout` section determines how fields are organized into **sections** in the Panel. Currently the Panel supports the `sections` layout, and you can define one or more **named sections** that group related fields.
+The `layout` section determines how fields are organized into **sections** in the Panel.
 
 Each section supports these properties:
 
@@ -119,17 +120,49 @@ Each section supports these properties:
 |`label`|<code><span class="type-string">string</span></code>|Display label for the section (can be translated)|
 |`fields`|<code><span class="type-keyword">array</span></code>|List of field names (referenced from the `fields` section)|
 |`collapsed`|<code><span class="type-bool">bool</span></code>|If `true`, the section is collapsed by default|
+|`order`|<code><span class="type-int">int</span></code>|<span class="badge badge-yellow">Since 2.2.0</span> Defines the order of the section among other sections (lower numbers appear first)|
 
 Example:
 
 ```yaml
 layout:
-    type: sections
     sections:
         content:
             label: '{{page.content}}'
             fields: [title, content]
             collapsed: false
+```
+
+### Tabs
+<span class="badge badge-yellow">Since 2.2.0</span>
+
+You can organize sections into **tabs** by adding the `tab` property to the `layout` section.
+Let's say you want to create two tabs: one for content-related sections and another for options-related sections.
+
+```yaml
+layout:
+    tabs:
+        content:
+            label: '{{page.content}}'
+
+        options:
+            label: '{{page.options}}'
+```
+
+Then assign sections to tabs using the `tab` property, for example this is the built-in `page` scheme layout:
+
+```yaml
+    sections:
+        page:
+            label: '{{page.page}}'
+            active: true
+            fields: [title, content, description]
+            tab: content
+
+        status:
+            label: '{{page.status}}'
+            fields: [published, publishDate, unpublishDate, routable, listed, cacheable]
+            tab: options
 ```
 
 ## Fields section

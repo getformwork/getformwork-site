@@ -146,7 +146,9 @@ Most of these fields are also rendered as input controls in the Panel, allowing 
 > The <code>listed</code> and <code>searchable</code> fields are <em>descriptive flags</em> meant to be used in your templates. They do not trigger any default behavior. For example, if a page is marked as <code>listed: false</code>, it is up to your navigation template to omit it manually. Similarly, <code>searchable: false</code> pages must be excluded from search results explicitly by your logic.
 
 #### Cache-related fields
-Since Formwork **2.1.0**, pages can define their cache settings using the following fields:
+<span class="badge badge-yellow">Since 2.1.0</span>
+
+Pages can define their cache settings using the following fields:
 |Field|Type|Description|Default|
 |--|--|--|--|
 |`cache.time`|<code><span class="type-number">int</span></code>|<code><span class="type-number">int</span></code>|Duration (in seconds) for which the page should be cached. If not set, the global cache duration from [site options](../site-options/#cache) is used.|`null`|
@@ -169,8 +171,8 @@ title: About Us
 tags:
     - team
     - company
-author: Luca Moretti
-cover-image: team.jpg
+author: Luca
+coverImage: team.jpg
 ---
 ```
 
