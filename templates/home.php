@@ -2,8 +2,8 @@
 <main>
     <section class="hero">
         <div class="container">
-            <h1><mark>Your site. With simplicity.</mark></h1>
-            <p>Formwork is a simple, fast and flexible flat-file CMS that allows you to create and manage your website without the need for a database.</p>
+            <h1><mark>Your site.<br>With simplicity.</mark></h1>
+            <p class="headline">Formwork is a <mark>simple, fast and flexible</mark> flat-file CMS that allows you to create and manage websites without the need for a database.</p>
             <div class="hero-actions">
                 <a class="hero-button" href="https://github.com/getformwork/formwork/releases/download/<?= $latestRelease ?>/formwork-<?= $latestRelease ?>.zip">Download <strong>Formwork <?= $latestRelease ?></strong></a>
                 <div class="version-notes">Released <strong><time datetime="<?= gmdate('Y-m-d\Th:i:s\Z', $latestReleaseTimestamp) ?>"><?= $latestReleaseDaysAgo ?></time></strong> • <a href="https://github.com/getformwork/formwork/blob/<?= $latestRelease ?>/CHANGELOG.md">Changelog</a></div>
