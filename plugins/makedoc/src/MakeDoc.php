@@ -264,6 +264,10 @@ class MakeDoc
             $output[] = '<p>–</p>';
         }
 
+        if ($doc['since']) {
+            $output[] = sprintf('<span class="badge badge-yellow">Since %s</span>', $doc['since']);
+        }
+
         $output[] = '</div>';
 
         if ($this->onlySummary) {
@@ -290,11 +294,6 @@ class MakeDoc
             $returnType = sprintf('<span class="type-name">%s</span>', $declaringClass);
         } else {
             $returnType = '<span class="type-keyword">mixed</span>';
-        }
-
-        if ($doc['since']) {
-            $output[] = '<h4>Since</h4>';
-            $output[] = sprintf('Formwork <a href="https://github.com/getformwork/formwork/blob/%s/CHANGELOG.md">%1$s</a>', $doc['since']);
         }
 
         $output[] = '<h4>Return type</h4>';
