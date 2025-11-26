@@ -12,7 +12,7 @@
                         <?= $p->description() ?>
                     <?php endif ?>
                 <?php endif ?>
-                <?= $makedoc->generateClassDocumentation($alias, $class, $includeInherited) ?>
+                <?= $makedoc->generateClassDocumentation($alias, $class, $includeInherited, $data[$alias]['excludeMethods'] ?? []) ?>
             <?php endforeach ?>
         <?php elseif ($type === 'fields'): ?>
             <?php foreach ($data as $alias => ['type' => $type]): ?>

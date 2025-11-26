@@ -11,6 +11,8 @@ documentation:
         app:
             fqcn: Formwork\Cms\App
             includeInherited: true
+            excludeMethods:
+                - plugins
         asset:
             fqcn: Formwork\Assets\Asset
             includeInherited: true

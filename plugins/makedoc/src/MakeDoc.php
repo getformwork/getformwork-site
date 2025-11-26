@@ -46,7 +46,7 @@ class MakeDoc
     {
         $output = [];
         foreach ($classes as $alias => ['fqcn' => $class, 'includeInherited' => $includeInherited]) {
-            $output[] = $this->generateClassDocumentation($alias, $class, $includeInherited);
+            $output[] = $this->generateClassDocumentation($alias, $class, $includeInherited, $classes[$alias]['excludeMethods'] ?? []);
         }
         return implode("\n", $output) . "\n";
     }
@@ -118,8 +118,9 @@ class MakeDoc
 
     /**
      * @param class-string $class
+     * @param array<string> $excludeMethods
      */
-    public function generateClassDocumentation(string $alias, string $class, bool $includeInherited): string
+    public function generateClassDocumentation(string $alias, string $class, bool $includeInherited, array $excludeMethods = []): string
     {
         $reflectionClass = new ReflectionClass($class);
 
@@ -132,6 +133,10 @@ class MakeDoc
         $output[] = '<div class="methods">';
 
         foreach ($methods as $method) {
+            if (in_array($method->name, $excludeMethods, true)) {
+                continue;
+            }
+
             $traits = $reflectionClass->getTraitNames();
             if ($method->isConstructor() && (!$reflectionClass->isInstantiable() || in_array(StaticClass::class, $traits, true))) {
                 continue; // Skip constructors of abstract classes
