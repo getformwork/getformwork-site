@@ -31,6 +31,29 @@ window.addEventListener("load", function () {
         });
     }
 
+    const iconFilter = document.getElementById("icon-filter");
+    if (iconFilter) {
+        const applyFilter = () => {
+            const q = iconFilter.value.trim().toLowerCase();
+            for (const icon of icons) {
+                const nameEl = icon.querySelector(".icon-name");
+                const name = nameEl ? nameEl.textContent.toLowerCase() : "";
+                icon.style.display = q === "" || name.indexOf(q) !== -1 ? "" : "none";
+            }
+        };
+
+        // Debounce to avoid excessive work on fast input
+        let debounceTimer = null;
+        iconFilter.addEventListener(
+            "input",
+            () => {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(applyFilter, 120);
+            },
+            { passive: true }
+        );
+    }
+
     document.querySelectorAll("time").forEach((timeElem) => {
         const datetime = timeElem.getAttribute("datetime");
         timeElem.title = new Date(datetime).toUTCString();
