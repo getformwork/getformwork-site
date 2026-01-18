@@ -39,6 +39,18 @@ class MakeDoc
         $this->loadPhpDocParser();
     }
 
+    public function getClassMeta(string $class): array
+    {
+        $reflectionClass = new ReflectionClass($class);
+        $doc = $this->parsePhpDoc($reflectionClass->getDocComment() ?: '/** */');
+
+        return [
+            'description' => $doc['description'],
+            'since'       => $doc['since'],
+            'deprecated'  => $doc['deprecated'],
+        ];
+    }
+
     /**
      * @param array<string, array{fqcn: class-string, includeInherited: bool}> $classes
      */
@@ -66,9 +78,14 @@ class MakeDoc
             if (in_array($name, ['return', 'toString', 'setValue'], true)) {
                 continue;
             }
-            $output[] = '<div>';
-            $output[] = $this->generateFunctionDocumentation(new ReflectionFunction($value), $alias, $name, ['field']);
-            $output[] = '</div>';
+
+            $methodDoc = $this->generateFunctionDocumentation(new ReflectionFunction($value), $alias, $name, ['field']);
+
+            if ($methodDoc === '') {
+                continue; // Skip methods with no documentation
+            }
+
+            $output[] = sprintf('<div>%s</div>', $methodDoc);
         }
 
         $output[] = '</div>';
@@ -89,6 +106,7 @@ class MakeDoc
             'returnDescription' => '',
             'internal'          => false,
             'since'             => null,
+            'deprecated'        => null,
         ];
 
         foreach ($phpDocNode->children as $child) {
@@ -109,6 +127,9 @@ class MakeDoc
                 }
                 if ($child->name === '@since' && $child->value) {
                     $result['since'] = $child->value;
+                }
+                if ($child->name === '@deprecated' && $child->value) {
+                    $result['deprecated'] = $child->value;
                 }
             }
         }
@@ -273,6 +294,15 @@ class MakeDoc
             $output[] = sprintf('<span class="badge badge-yellow">Since %s</span>', $doc['since']);
         }
 
+        if ($doc['deprecated']) {
+            $deprecation = $this->splitDeprecationMessage($doc['deprecated']);
+            if ($deprecation['version']) {
+                $output[] = sprintf('<span class="badge badge-red">Deprecated since %s</span>', $deprecation['version']);
+            } else {
+                $output[] = '<span class="badge badge-red">Deprecated</span>';
+            }
+        }
+
         $output[] = '</div>';
 
         if ($this->onlySummary) {
@@ -309,6 +339,11 @@ class MakeDoc
 
         if (isset($doc['throwsDescription'])) {
             $output[] = $this->generateExceptionsDocumentation($doc['throwsDescription'] ?? []);
+        }
+
+        if (isset($deprecation['message'])) {
+            $output[] = '<h4>Deprecation message</h4>';
+            $output[] = sprintf('<p>%s</p>', Markdown::parse($deprecation['message']));
         }
 
         $file = $reflection->getFileName();
@@ -564,6 +599,15 @@ class MakeDoc
             default:
                 return sprintf('<span class="type-name">%s</span>', $value::class);
         }
+    }
+
+    private function splitDeprecationMessage(string $message): array
+    {
+        preg_match('/^Since\s+([^\s]+)(?:\s*(.*))?$/i', $message, $matches, PREG_UNMATCHED_AS_NULL);
+        return [
+            'version' => $matches[1] ?? null,
+            'message' => $matches[2] ?? null,
+        ];
     }
 
     private function loadPhpDocParser(): void

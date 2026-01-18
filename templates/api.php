@@ -12,6 +12,10 @@
                         <?= $p->description() ?>
                     <?php endif ?>
                 <?php endif ?>
+                <?php $meta = $makedoc->getClassMeta($class) ?>
+                <?php if ($meta['since']): ?>
+                    <p><span class="badge badge-yellow">Since <?= $meta['since'] ?></span></p>
+                <?php endif ?>
                 <?= $makedoc->generateClassDocumentation($alias, $class, $includeInherited, $data[$alias]['excludeMethods'] ?? []) ?>
             <?php endforeach ?>
         <?php elseif ($type === 'fields'): ?>
