@@ -22,7 +22,6 @@ fields:
         type: password
         label: '{{user.password}}'
         placeholder: '{{user.password.placeholder}}'
-        disabled: true
         pattern: '^.{8,}$'
         autocomplete: new-password
 
