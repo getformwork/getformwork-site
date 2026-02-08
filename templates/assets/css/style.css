@@ -1123,7 +1123,6 @@ mark {
     font-family: var(--font-family-mono);
     font-size: 1.5rem;
     line-height: 1.25;
-    scroll-margin-top: 0;
 }
 
 .documentation .methods > * {

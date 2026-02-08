@@ -11,8 +11,6 @@ documentation:
         app:
             fqcn: Formwork\Cms\App
             includeInherited: true
-            excludeMethods:
-                - plugins
         asset:
             fqcn: Formwork\Assets\Asset
             includeInherited: true
@@ -31,17 +29,29 @@ documentation:
         exif:
             fqcn: Formwork\Images\Exif\ExifData
             includeInherited: true
+        eventDispatcher:
+            fqcn: Formwork\Events\EventDispatcher
+            includeInherited: true
         field:
             fqcn: Formwork\Fields\Field
             includeInherited: false
         file:
             fqcn: Formwork\Files\File
             includeInherited: true
+        form:
+            fqcn: Formwork\Forms\Form
+            includeInherited: true
         image:
             fqcn: Formwork\Images\Image
             includeInherited: true
         language:
+            fqcn: Formwork\Languages\Language
+            includeInherited: true
+        languages:
             fqcn: Formwork\Languages\Languages
+            includeInherited: true
+        logger:
+            fqcn: Formwork\Log\Logger
             includeInherited: true
         metadata:
             fqcn: Formwork\Metadata\Metadata
@@ -55,8 +65,35 @@ documentation:
         panel:
             fqcn: Formwork\Panel\Panel
             includeInherited: true
+        plugin:
+            fqcn: Formwork\Plugins\Plugin
+            includeInherited: true
+        pluginManifest:
+            fqcn: Formwork\Plugins\PluginManifest
+            includeInherited: false
+        plugins:
+            fqcn: Formwork\Plugins\Plugins
+            includeInherited: false
         request:
             fqcn: Formwork\Http\Request
+            includeInherited: true
+        response:
+            fqcn: Formwork\Http\Response
+            includeInherited: true
+        jsonResponse:
+            fqcn: Formwork\Http\JsonResponse
+            includeInherited: true
+        permissions:
+            fqcn: Formwork\Users\Permissions
+            includeInherited: true
+        role:
+            fqcn: Formwork\Users\Role
+            includeInherited: true
+        route:
+            fqcn: Formwork\Router\Route
+            includeInherited: true
+        routeParams:
+            fqcn: Formwork\Router\RouteParams
             includeInherited: true
         router:
             fqcn: Formwork\Router\Router

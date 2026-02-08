@@ -23,6 +23,6 @@ The value of a **date** field is a <code><span class="type-string">string</span>
 |`default`|<code><span class="type-string">string</span></code>|Default date or date-time value in ISO 8601 format.|`''`|
 |`placeholder`|<code><span class="type-string">string</span></code>|Placeholder text displayed when no date is selected.|`''`|
 |`icon`|<code><span class="type-string">string</span></code>|Name of the icon displayed inside the input.|`'calendar-clock'`|
-|`time`|<code><span class="type-bool">bool</span></code>|If `true`, enables time selection in addition to the date.|`false`|
+|`time`|<code><span class="type-bool">bool</span></code>|If `true`, enables time selection in addition to the date.|`true`|
 |`required`|<code><span class="type-bool">bool</span></code>|If `true`, the field must have a date before submitting the form.|`false`|
 |`disabled`|<code><span class="type-bool">bool</span></code>|If `true`, the field will be shown as disabled in the Panel.|`false`|

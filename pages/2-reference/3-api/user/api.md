@@ -4,6 +4,6 @@ documentation:
     classes:
         user:
             fqcn: Formwork\Users\User
-            includeInherited: false
+            includeInherited: true
 description: 'Represents a site user.'
 ---
