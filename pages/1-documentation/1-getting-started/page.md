@@ -146,10 +146,12 @@ Here's a quick look at the main folders in a typical Formwork installation:
 
 | Folder                           | Description |
 |------------------------------------------------------------|-------------|
+| `📂 assets`                      | <span class="badge badge-yellow">Since 2.3.2</span> Contains cached assets that should be served directly by the web server to speed up page load times and avoid unnecessary processing. |
 | `📂 backup`                      | Stores backups of the site content and configuration|
 | `📂 bin`                         | Contains CLI tools, including the development server (`serve`). |
 | `📂 cache`                       | Stores cached data (pages, config, images, etc.)|
 | `📂 formwork`                    | Core Formwork application files. Should not be modified directly. |
+| `📂 logs`                        | <span class="badge badge-yellow">Since 2.3.0</span> Application logs. |
 | `📂 panel`                       | Administration panel resources. Should not be modified directly. |
 | `📂 site`                        | Main directory for all site-specific content and configuration. |
 | `📂 vendor`                      | Composer-managed dependencies. Do not edit manually. |
@@ -165,14 +167,17 @@ The `site` folder is where you will spend most of your time while building your 
 
 | Folder                           | Description |
 |----------------------------------|-------------|
+| `📂 site/auth`                   | <span class="badge badge-yellow">Since 2.3.0</span> Authentication-related logs. It must not be committed to version control for security reasons. |
 | `📂 site/config`                 | System and site configuration files (`system.yaml`, `site.yaml`). |
 | `📂 site/files`                  | Uploaded global files (e.g. media not tied to a specific page or template). |
 | `📂 site/pages`                  | Page folders with content (`.md`), metadata, and files. |
+| `📂 site/plugins`                | <span class="badge badge-yellow">Since 2.3.0</span> Custom plugins to extend Formwork functionality. |
 | `📂 site/schemes`                | Schemes that define structure for pages, users, files, and config. |
 | `📂 site/schemes/config`         | Schemes for the config fields shown in the Panel. |
 | `📂 site/schemes/files`          | Schemes for file metadata (e.g. title, description). |
 | `📂 site/schemes/pages`          | Schemes for individual page types. |
 | `📂 site/schemes/users`          | Schemes for user accounts and roles. |
+| `📂 site/sessions`               | <span class="badge badge-yellow">Since 2.3.0</span> Session-related data. It must not be committed to version control for security reasons.  |
 | `📂 site/statistics`             | Stores site visits statistics. |
 | `📂 site/templates`              | PHP templates used to render pages on the frontend. |
 | `📂 site/templates/assets`       | Template-specific CSS, JS, or media assets. |
