@@ -196,17 +196,51 @@ class MakeDoc
         $name ??= $reflection->getName();
 
         if ($reflection instanceof ReflectionMethod) {
-            while ($reflection->hasPrototype() && !$doc['description']) {
-                $reflection = $reflection->getPrototype();
-                $doc['description'] = $this->parsePhpDoc($reflection->getDocComment() ?: '/** */')['description'];
+            $methodName = $reflection->getName();
+            $class = $reflection->getDeclaringClass();
+
+            while (true) {
+                $parent = $class->getParentClass();
+
+                // Check the parent class first
+                if ($parent !== false && $parent->hasMethod($methodName)) {
+                    $parentMethod = $parent->getMethod($methodName);
+                    $parentDoc = $this->parsePhpDoc($parentMethod->getDocComment() ?: '/** */');
+                    if ($parentDoc['description']) {
+                        $doc['description'] = $parentDoc['description'];
+                        break;
+                    }
+                }
+
+                // Check interfaces introduced at this class level
+                $parentInterfaces = $parent === false ? [] : $parent->getInterfaceNames();
+
+                foreach (array_diff($class->getInterfaceNames(), $parentInterfaces) as $interfaceName) {
+                    $interface = new ReflectionClass($interfaceName);
+                    if (!$interface->hasMethod($methodName)) {
+                        continue;
+                    }
+                    $interfaceMethod = $interface->getMethod($methodName);
+                    $interfaceDoc = $this->parsePhpDoc($interfaceMethod->getDocComment() ?: '/** */');
+                    if ($interfaceDoc['description']) {
+                        $doc['description'] = $interfaceDoc['description'];
+                        break 2;
+                    }
+                }
+
+                if ($parent === false) {
+                    break;
+                }
+
+                $class = $parent;
             }
 
             if (!$doc['description']) {
                 foreach ($reflection->getDeclaringClass()->getTraits() as $reflectionClass) {
-                    if (!$reflectionClass->hasMethod($reflection->getName())) {
+                    if (!$reflectionClass->hasMethod($methodName)) {
                         continue;
                     }
-                    $traitMethod = $reflectionClass->getMethod($reflection->getName());
+                    $traitMethod = $reflectionClass->getMethod($methodName);
                     $doc = $this->parsePhpDoc($traitMethod->getDocComment() ?: '/** */');
                     if ($doc['description']) {
                         break;
