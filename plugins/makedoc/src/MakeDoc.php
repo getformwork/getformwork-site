@@ -349,6 +349,7 @@ class MakeDoc
         $file = $reflection->getFileName();
         if (
             $file && ($startLine = $reflection->getStartLine()) && ($endLine = $reflection->getEndLine())
+            && Path::isRelativeTo($file, realpath(SYSTEM_PATH))
         ) {
             $output[] = '<h4>Reference</h4>';
             $output[] = sprintf(
