@@ -195,7 +195,7 @@ class MakeDoc
 
         $name ??= $reflection->getName();
 
-        if ($reflection instanceof ReflectionMethod) {
+        if ($reflection instanceof ReflectionMethod && !$doc['description']) {
             $methodName = $reflection->getName();
             $class = $reflection->getDeclaringClass();
 
