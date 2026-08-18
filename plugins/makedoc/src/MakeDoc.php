@@ -7,6 +7,7 @@ use Formwork\Fields\FieldFactory;
 use Formwork\Parsers\Markdown;
 use Formwork\Traits\StaticClass;
 use Formwork\Utils\Arr;
+use Formwork\Utils\Html;
 use Formwork\Utils\Path;
 use Formwork\Utils\Str;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
@@ -255,6 +256,11 @@ class MakeDoc
 
         $uri = Path::join([$this->baseUri, strtolower((string) $alias), '/']);
 
+        $htmlClasses = [
+            'is-deprecated' => $doc['deprecated'],
+            'is-new' => $doc['since'],
+        ];
+
         if ($reflection instanceof ReflectionMethod) {
             $className = $context?->getShortName() ?? $reflection->getDeclaringClass()->getShortName();
             $declaringClass = $reflection->getDeclaringClass()->getName();
@@ -267,15 +273,17 @@ class MakeDoc
                 $output[] = $outputLinks ? sprintf('<h3 id="%2$s"><a href="%s#%s">new %s()</a></h3>', $uri, $id, $className) : sprintf('<h3 id="%s">new %s()</h3>', $id, $className);
             } else {
                 $output[] = $outputLinks ? sprintf(
-                    '<h3 id="%2$s"><a href="%s#%s">%s%s<wbr>%s()</a></h3>',
+                    '<h3 id="%3$s" class="%s"><a href="%s#%s">%s%s<wbr>%s()</a></h3>',
+                    Html::classes($htmlClasses),
                     $uri,
                     $id,
                     $reflection->isStatic() ? $className : '$' . $alias,
                     htmlspecialchars($reflection->isStatic() ? '::' : '->'),
                     $name
                 ) : sprintf(
-                    '<h3 id="%s">%s%s<wbr>%s()</h3>',
+                    '<h3 id="%s" class="%s">%s%s<wbr>%s()</h3>',
                     $id,
+                    Html::classes($htmlClasses),
                     $reflection->isStatic() ? $className : '$' . $alias,
                     htmlspecialchars($reflection->isStatic() ? '::' : '->'),
                     $name
@@ -286,28 +294,32 @@ class MakeDoc
 
             if ($alias !== null) {
                 $output[] = $outputLinks ? sprintf(
-                    '<h3 id="%2$s"><a href="%s#%s">%s%s<wbr>%s()</a></h3>',
+                    '<h3 id="%3$s" class="%s"><a href="%s#%s">%s%s<wbr>%s()</a></h3>',
+                    Html::classes($htmlClasses),
                     $uri,
                     $id,
                     '$' . $alias,
                     htmlspecialchars('->'),
                     $name
                 ) : sprintf(
-                    '<h3 id="%s">%s%s<wbr>%s()</h3>',
+                    '<h3 id="%s" class="%s">%s%s<wbr>%s()</h3>',
                     $id,
+                    Html::classes($htmlClasses),
                     '$' . $alias,
                     htmlspecialchars('->'),
                     $name
                 );
             } else {
                 $output[] = $outputLinks ? sprintf(
-                    '<h3 id="%2$s"><a href="%s#%s">%s()</a></h3>',
+                    '<h3 id="%3$s" class="%s"><a href="%s#%s">%s()</a></h3>',
+                    Html::classes($htmlClasses),
                     $uri,
                     $id,
                     $name
                 ) : sprintf(
-                    '<h3 id="%s">%s()</h3>',
+                    '<h3 id="%s" class="%s">%s()</h3>',
                     $id,
+                    Html::classes($htmlClasses),
                     $name
                 );
             }

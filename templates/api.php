@@ -5,14 +5,14 @@
     <?php foreach ($page->get('documentation', []) as $type => $data): ?>
         <?php if ($type === 'classes'): ?>
             <?php foreach ($data as $alias => ['fqcn' => $class, 'includeInherited' => $includeInherited]): ?>
+                <?php $meta = $makedoc->getClassMeta($class) ?>
                 <?php if ($isSummary): ?>
-                    <h2 id="<?= strtolower($alias) ?>"><a href="<?= Formwork\Utils\Path::join([$baseUri, strtolower($alias), '/']) ?>"><?= Formwork\Utils\Str::afterLast($class, '\\') ?></a></h2>
+                    <h2 id="<?= strtolower($alias) ?>" class="<?= $this->classes(['is-new' => $meta['since']]) ?>"><a href="<?= Formwork\Utils\Path::join([$baseUri, strtolower($alias), '/']) ?>"><?= Formwork\Utils\Str::afterLast($class, '\\') ?></a></h2>
                     <?php $p = $page->children()->find(fn($page) => $page->slug() === strtolower($alias)) ?>
                     <?php if ($p): ?>
                         <?= $p->description() ?>
                     <?php endif ?>
                 <?php endif ?>
-                <?php $meta = $makedoc->getClassMeta($class) ?>
                 <?php if ($meta['since']): ?>
                     <p><span class="badge badge-yellow">Since <?= $meta['since'] ?></span></p>
                 <?php endif ?>
