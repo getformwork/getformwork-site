@@ -39,8 +39,9 @@ class TocGenerator
 
                 $headings[] = [
                     'level' => $level,
-                    'text' => $element->textContent,
-                    'id' => $element->getAttribute('id')
+                    'text'  => $element->textContent,
+                    'id'    => $element->getAttribute('id'),
+                    'class' => $element->getAttribute('class'),
                 ];
             }
         }
@@ -68,6 +69,7 @@ class TocGenerator
                 'level' => $current['level'],
                 'text' => $current['text'],
                 'id' => $current['id'],
+                'class' => $current['class'],
                 'children' => []
             ];
 
