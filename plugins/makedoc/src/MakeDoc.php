@@ -399,7 +399,8 @@ class MakeDoc
         ) {
             $output[] = '<h4>Reference</h4>';
             $output[] = sprintf(
-                '<a href="https://github.com/getformwork/formwork/blob/2.x/formwork/%s#L%d-L%d">%1$s#L%2$d-L%3$d</a>',
+                '<a href="https://github.com/getformwork/formwork/blob/%s/formwork/%s#L%d-L%d">%2$s#L%3$d-L%4$d</a>',
+                App::VERSION,
                 str_replace('\\', '/', Str::afterLast($file, '/formwork/')),
                 $startLine,
                 $endLine
