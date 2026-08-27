@@ -20,6 +20,8 @@ pages:
                             tag: div
                             attributes:
                                 class: table-wrapper
+            League\CommonMark\Extension\Attributes\AttributesExtension:
+                enabled: true
             Formwork\Plugins\CommonMarkCallout\CalloutExtension:
                 enabled: true
 files:
