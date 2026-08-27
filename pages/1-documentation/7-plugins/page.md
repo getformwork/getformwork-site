@@ -1,6 +1,6 @@
 ---
 title: "Plugins"
-description: 'Understand Formwork plugin architecture and learn how to build plugins with routes, services, views, assets, schemes, and event listeners.'
+description: "Understand Formwork plugin architecture and learn how to build plugins with routes, services, views, assets, schemes, and event listeners."
 prevNext: true
 ---
 
@@ -12,11 +12,11 @@ Each plugin is a self-contained module that can be enabled, configured, and evol
 
 Common plugin use cases include:
 
-* Listening to Formwork lifecycle/page/panel events
-* Adding custom routes and controllers
-* Providing plugin settings through schemes and Panel options
-* Shipping reusable views, assets, and translations
-* Integrating external APIs or internal shared logic
+- Listening to Formwork lifecycle/page/panel events
+- Adding custom routes and controllers
+- Providing plugin settings through schemes and Panel options
+- Shipping reusable views, assets, and translations
+- Integrating external APIs or internal shared logic
 
 ## Plugins in Formwork lifecycle
 
@@ -32,15 +32,15 @@ During boot, Formwork processes plugins in this order:
 2. Load plugin directories from `system.plugins.path` (default: `📂 site/plugins`)
 3. Initialize **enabled** plugins
     1. Instantiate the main plugin class (extending `Formwork\Plugins\Plugin`)
-    2. Run the plugin `autoload()` method  (if provided) to register plugin classes and dependencies with a Composer autoloader
+    2. Run the plugin `autoload()` method (if provided) to register plugin classes and dependencies with a Composer autoloader
     3. Register event listeners defined by methods starting with `on...`
     4. Execute the `initialize()` method internally, which is responsible for:
-        * loading default config from `plugin.yaml`
-        * loading schemes from `📂 schemes/` (if provided)
-        * loading translations from `📂 translations/` (if provided)
-        * registering views from `📂 views/` (if provided)
-        * registering assets from `📂 assets/` (if provided)
-        * calling `loadServices()` to register plugin services in the container (if overridden)
+        - loading default config from `plugin.yaml`
+        - loading schemes from `📂 schemes/` (if provided)
+        - loading translations from `📂 translations/` (if provided)
+        - registering views from `📂 views/` (if provided)
+        - registering assets from `📂 assets/` (if provided)
+        - calling `loadServices()` to register plugin services in the container (if overridden)
 4. Load panel and system routes
 
 This order matters. For example, event listeners are discovered before plugin internals are loaded, while plugin services are available after initialization.
@@ -54,17 +54,17 @@ A plugin is contained in a folder under `📂 site/plugins/`. The folder name is
 
 The typical folder structure is:
 
-| Path | Description | Required |
-|--|--|--|
-| `📂 <plugin-id>/plugin.yaml` | Plugin manifest (metadata and optional default config) | No |
-| `📂 <plugin-id>/<plugin-id>.php` | Main plugin class extending `Formwork\Plugins\Plugin` | Yes |
-| `📂 <plugin-id>/src/` | PHP classes (controllers, listeners helpers, services) | No |
-| `📂 <plugin-id>/routes/routes.php` | Plugin route definitions, to add endpoints for controller actions | No |
-| `📂 <plugin-id>/views/` | Plugin view files resolved as `@plugin:<id>.*` | No |
-| `📂 <plugin-id>/assets/` | Static files (CSS, JS, images) resolved via plugin assets | No |
-| `📂 <plugin-id>/translations/` | Translation dictionaries (`en.yaml`, `it.yaml`, etc.) | No |
-| `📂 <plugin-id>/schemes/` | Scheme files, including plugin options UI schemes | No |
-| `📂 <plugin-id>/vendor/` | Composer dependencies and autoloader | No |
+| Path                               | Description                                                       | Required |
+| ---------------------------------- | ----------------------------------------------------------------- | -------- |
+| `📂 <plugin-id>/plugin.yaml`       | Plugin manifest (metadata and optional default config)            | No       |
+| `📂 <plugin-id>/<plugin-id>.php`   | Main plugin class extending `Formwork\Plugins\Plugin`             | Yes      |
+| `📂 <plugin-id>/src/`              | PHP classes (controllers, listeners helpers, services)            | No       |
+| `📂 <plugin-id>/routes/routes.php` | Plugin route definitions, to add endpoints for controller actions | No       |
+| `📂 <plugin-id>/views/`            | Plugin view files resolved as `@plugin:<id>.*`                    | No       |
+| `📂 <plugin-id>/assets/`           | Static files (CSS, JS, images) resolved via plugin assets         | No       |
+| `📂 <plugin-id>/translations/`     | Translation dictionaries (`en.yaml`, `it.yaml`, etc.)             | No       |
+| `📂 <plugin-id>/schemes/`          | Scheme files, including plugin options UI schemes                 | No       |
+| `📂 <plugin-id>/vendor/`           | Composer dependencies and autoloader                              | No       |
 
 > [!NOTE]
 > Only `plugin.yaml` and the main plugin class file are required for a valid plugin package.
@@ -73,8 +73,8 @@ The typical folder structure is:
 
 Plugins are enabled by setting the `enabled` flag to `true`. This can be done at two levels:
 
-* Global switch: `system.plugins.enabled`
-* Per-plugin flag: `plugins.<pluginName>.enabled`
+- Global switch: `system.plugins.enabled`
+- Per-plugin flag: `plugins.<pluginName>.enabled`
 
 The global switch is a master toggle that can disable all plugins at once. The per-plugin flag allows you to enable or disable individual plugins while keeping them installed.
 
@@ -84,15 +84,15 @@ The `plugin.yaml` file is the plugin manifest. The manifest contains metadata ab
 
 The manifest can include the following keys:
 
-| Key | Description |
-|--|--|
-| `title` | Human-readable plugin name shown in the Panel and docs. |
-| `description` | Short summary of what the plugin does. |
-| `author` | Author or organization name. |
-| `homepage` | Project URL (docs, repository, or marketing page). |
-| `license` | License identifier (for example `MIT`). |
-| `version` | Plugin version string. |
-| `config` | Default configuration values. |
+| Key           | Description                                             |
+| ------------- | ------------------------------------------------------- |
+| `title`       | Human-readable plugin name shown in the Panel and docs. |
+| `description` | Short summary of what the plugin does.                  |
+| `author`      | Author or organization name.                            |
+| `homepage`    | Project URL (docs, repository, or marketing page).      |
+| `license`     | License identifier (for example `MIT`).                 |
+| `version`     | Plugin version string.                                  |
+| `config`      | Default configuration values.                           |
 
 Example:
 
@@ -115,9 +115,10 @@ Values in `config` are used as defaults when the plugin is enabled. They can be 
 Plugins must have a main class (or entrypoint) that extends `Formwork\Plugins\Plugin`. This class is responsible for defining plugin behavior, such as event listeners, services, and autoloading.
 
 For a plugin with ID `hello-world`, Formwork infers the main class file and class name using a convention.
-* Main class file: `hello-world.php`
-* Main class name: `Formwork\Plugins\HelloWorldPlugin` (uppercase first letter of each word, no hyphens, suffixed with `Plugin`)
-* Plugin config key: `plugins.helloWorld`
+
+- Main class file: `hello-world.php`
+- Main class name: `Formwork\Plugins\HelloWorldPlugin` (uppercase first letter of each word, no hyphens, suffixed with `Plugin`)
+- Plugin config key: `plugins.helloWorld`
 
 > [!WARNING]
 > If the class file or class name does not match this convention, the plugin is considered invalid and is ignored during loading.
@@ -159,11 +160,11 @@ Plugins can listen to Formwork events by defining **public** methods prefixed wi
 
 Formwork automatically maps method names to event names, stripping the `on` prefix and converting the remaining name to lower camel case. For example:
 
-| Method name | Event name | Event class |
-|--|--|--|
-| <code><span class="type-name">onPageRender</span><span class="token punctuation">()</span></code> | `pageRender` | [<code><span class="type-name">Formwork\Pages\Events\PageRenderEvent</span></code>](/reference/events/pagerenderevent/) |
-| <code><span class="type-name">onPanelLoggedIn</span><span class="token punctuation">()</span></code> | `panelLoggedIn` | [<code><span class="type-name">Formwork\Panel\Events\PanelLoggedInEvent</span></code>](/reference/events/panelloggedinevent/) |
-| <code><span class="type-name">onRoutesBeforeLoad</span><span class="token punctuation">()</span></code> | `routesBeforeLoad` | [<code><span class="type-name">Formwork\Cms\Events\RoutesBeforeLoadEvent</span></code>](/reference/events/routesbeforeloadevent/) |
+| Method name                                                                                             | Event name         | Event class                                                                                         |
+| ------------------------------------------------------------------------------------------------------- | ------------------ | --------------------------------------------------------------------------------------------------- |
+| <code><span class="type-name">onPageRender</span><span class="token punctuation">()</span></code>       | `pageRender`       | [`Formwork\Pages\Events\PageRenderEvent`{.type-name}](/reference/events/pagerenderevent/)           |
+| <code><span class="type-name">onPanelLoggedIn</span><span class="token punctuation">()</span></code>    | `panelLoggedIn`    | [`Formwork\Panel\Events\PanelLoggedInEvent`{.type-name}](/reference/events/panelloggedinevent/)     |
+| <code><span class="type-name">onRoutesBeforeLoad</span><span class="token punctuation">()</span></code> | `routesBeforeLoad` | [`Formwork\Cms\Events\RoutesBeforeLoadEvent`{.type-name}](/reference/events/routesbeforeloadevent/) |
 
 > [!NOTE]
 > This naming convention keeps event wiring inside the plugin class with no manual registration code.
@@ -188,13 +189,12 @@ Then the `$message` variable is available in page templates:
 
 ### Listener methods rules
 
-* Method must be `public`
-* Method name must start with `on`
-* Event name is inferred from the remaining method name, converted to lower camel case
+- Method must be `public`
+- Method name must start with `on`
+- Event name is inferred from the remaining method name, converted to lower camel case
 
 > [!NOTE]
 > If a method is not public or does not start with `on`, it is not treated as an event listener.
-
 
 ## Dependencies and classes autoloader
 
@@ -231,7 +231,7 @@ class HelloWorldPlugin extends Plugin
 }
 ```
 
-Then we also want to define additional classes for our plugin, for example a class <code><span class="type-name">Formwork\Plugins\HelloWorld\FancyGreeter</span></code>. We can place it in `📂 site/plugins/hello-world/src/` and register a [PSR-4](https://www.php-fig.org/psr/psr-4/) namespace in the `autoload()` method.
+Then we also want to define additional classes for our plugin, for example a class `Formwork\Plugins\HelloWorld\FancyGreeter`{.type-name}. We can place it in `📂 site/plugins/hello-world/src/` and register a [PSR-4](https://www.php-fig.org/psr/psr-4/) namespace in the `autoload()` method.
 
 ```php
 public function autoload(): ?ClassLoader
@@ -270,6 +270,7 @@ class HelloWorldController extends AbstractController
 > Controller methods can receive dependencies (for example `RouteParams`, `Site`, `Panel`, or custom services) through the container via method parameters. These dependencies are resolved automatically when the controller action is called, so you can focus on writing the logic for handling the request and generating the response.
 >
 > For example your controller action needs to access the `Logger` service, you can just add it as a parameter and Formwork will inject it when the method is called:
+>
 > ```php
 > public function greet(Formwork\Log\Logger $logger): Response
 > {
@@ -277,8 +278,6 @@ class HelloWorldController extends AbstractController
 >     return new Response('Hello, World!');
 > }
 > ```
-
-
 
 ## Routes
 
@@ -364,16 +363,16 @@ class HelloWorldController extends AbstractController
 ```
 
 > [!TIP]
-> * Keep controller actions small and delegate work to services
-> * Pass `actionParameters` if your controller needs plugin context
-
+>
+> - Keep controller actions small and delegate work to services
+> - Pass `actionParameters` if your controller needs plugin context
 
 ## Views and assets
 
 If present, plugin directories are registered automatically:
 
-* `📂 site/plugins/<plugin-id>/views/` as view namespace `@plugin:<plugin-id>`
-* `📂 site/plugins/<plugin-id>/assets/` as asset namespace `@plugin:<plugin-id>`
+- `📂 site/plugins/<plugin-id>/views/` as view namespace `@plugin:<plugin-id>`
+- `📂 site/plugins/<plugin-id>/assets/` as asset namespace `@plugin:<plugin-id>`
 
 Examples:
 
@@ -423,7 +422,6 @@ The `includeVersion` option appends a version query parameter to the asset URL b
 > [!TIP]
 > Use versioned URLs for long-lived caching when distributing plugin assets in production.
 
-
 ## Schemes
 
 You can also use the schemes under `📂 site/plugins/<plugin-id>/schemes/` and to extend page/user/config models as needed.
@@ -440,7 +438,7 @@ class HelloWorldPlugin extends Plugin
     {
         $pageScheme = $this->app->schemes()->get('pages');
 
-        // Load a scheme defined by the plugin 
+        // Load a scheme defined by the plugin
         $greetingsScheme = $this->app->schemes()->get('hello-world-greetings');
 
         $pageScheme->extend($greetingsScheme);
@@ -489,7 +487,7 @@ plugin.helloWorld.description: Adds hello world features
 You can then reference translation keys in schemes and views:
 
 ```yaml
-title: '{{plugin.helloWorld.title}}'
+title: "{{plugin.helloWorld.title}}"
 ```
 
 ## Services

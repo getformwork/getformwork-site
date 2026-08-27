@@ -1,21 +1,24 @@
 ---
 title: Templates
 prevNext: true
-description: 'Learn how templates control the visual rendering of pages and how to organize layouts, partials, and reusable blocks in your theme.'
+description: "Learn how templates control the visual rendering of pages and how to organize layouts, partials, and reusable blocks in your theme."
 ---
+
 ## Introduction
+
 Templates in Formwork define how your pages are rendered on the frontend. They are PHP files located in your site's `📂 templates/` directory and are directly associated with the page's content file name.
 
 Each template is responsible for generating the HTML output for a specific type of page, such as a homepage, a blog listing, or a single post.
 
 ## Template files
+
 Templates are regular PHP files and are located in `📂 site/templates/`.
 
 Each file corresponds to a template name. For example:
 
-* `default.php` is used by pages with content file `default.md`
-* `blog.php` is used by pages with `blog.md`
-* `post.php` is used by pages with `post.md`
+- `default.php` is used by pages with content file `default.md`
+- `blog.php` is used by pages with `blog.md`
+- `post.php` is used by pages with `post.md`
 
 > [!NOTE]
 > In template names the scheme type is omitted. For example the template corresponding to the scheme `pages.product` is `product.php`, not `pages.product.php`.
@@ -99,25 +102,26 @@ You can freely mix HTML and PHP in your templates. It's best practice to avoid s
 
 When a template is rendered, Formwork provides several <strong>default global variables</strong> that you can use within your template. These variables give you access to the current page, site, and application context, as well as utility functions and CSRF tokens for form handling.
 
-|Variable|Type|Description|
-|--|--|--|
-|`$this`|<code><span class="type-name">Formwork\Templates\Template</span></code>|The current template. It is mainly used to access methods to include partial templates, define blocks, declare layout, access utility functions, etc. See [API reference](../../reference/api/template/) for available methods. The object is extended with [template methods](../../reference/template-methods/)|
-|`$page`|<code><span class="type-name">Formwork\Page\Page</span></code>|The current page. See [API reference](../../reference/api/page/) for available methods|
-|`$site`|<code><span class="type-name">Formwork\Cms\Site</span></code>|The site. See [API reference](../../reference/api/site/) for available methods|
-|`$app`|<code><span class="type-name">Formwork\Cms\App</span></code>|The global CMS instance. See [API reference](../../reference/api/app/) for available methods|
-|`$router`|<code><span class="type-name">Formwork\Router\Router</span></code>|The router instance. Useful for reading route params and generating routes. See [API reference](../../reference/api/router/) for available methods|
-|`$crsfToken`|<code><span class="type-name">Formwork\Security\CsrfToken</span></code>|The CSRF token instance, useful when handling form data|
+| Variable     | Type                                      | Description                                                                                                                                                                                                                                                                                                       |
+| ------------ | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `$this`      | `Formwork\Templates\Template`{.type-name} | The current template. It is mainly used to access methods to include partial templates, define blocks, declare layout, access utility functions, etc. See [API reference](../../reference/api/template/) for available methods. The object is extended with [template methods](../../reference/template-methods/) |
+| `$page`      | `Formwork\Page\Page`{.type-name}          | The current page. See [API reference](../../reference/api/page/) for available methods                                                                                                                                                                                                                            |
+| `$site`      | `Formwork\Cms\Site`{.type-name}           | The site. See [API reference](../../reference/api/site/) for available methods                                                                                                                                                                                                                                    |
+| `$app`       | `Formwork\Cms\App`{.type-name}            | The global CMS instance. See [API reference](../../reference/api/app/) for available methods                                                                                                                                                                                                                      |
+| `$router`    | `Formwork\Router\Router`{.type-name}      | The router instance. Useful for reading route params and generating routes. See [API reference](../../reference/api/router/) for available methods                                                                                                                                                                |
+| `$crsfToken` | `Formwork\Security\CsrfToken`{.type-name} | The CSRF token instance, useful when handling form data                                                                                                                                                                                                                                                           |
 
 ## Rendering pages
 
 ### The `$page` variable
+
 When rendering a page, Formwork provides a `$page` variable that contains all the data related to the current page.
 
-This object is an instance of <code><span class="type-name">Formwork\Pages\Page</span></code> (see [API Reference](/reference/api/site/)) and provides methods to access various properties and fields of the page.
+This object is an instance of `Formwork\Pages\Page`{.type-name} (see [API Reference](/reference/api/site/)) and provides methods to access various properties and fields of the page.
 
-* Content (`$page->content()`)
-* Frontmatter fields (e.g. `title`, `published`)
-* Children pages (`$page->children()`)
+- Content (`$page->content()`)
+- Frontmatter fields (e.g. `title`, `published`)
+- Children pages (`$page->children()`)
 
 Example:
 
@@ -134,6 +138,7 @@ Example:
 ```
 
 ### Accessing fields
+
 You can access fields defined in the page's frontmatter directly as methods of the `$page` object. For example, you can get the value of the field `title` with `$page->title()`:
 
 ```php
@@ -161,7 +166,9 @@ You can also access fields defined in the page's content file, such as `summary`
 > In such cases you may access the field with `$page->fields()->get('media')` but you should avoid this naming to begin with.
 
 #### Conditional field access
+
 You can check if a field exists or has a value using the `$page->has()` method. For example, to check if the page has a `coverImage` field:
+
 ```php
 <?php if ($page->has('coverImage')): ?>
 ...
@@ -178,12 +185,15 @@ This is useful when you want to access a field that may not be defined, and you 
 If the `author` field does not exist, it will simply output nothing.
 
 You can also provide a default value as the second argument to `get()`:
+
 ```php
 <p class="author">Author: <?= $page->get('author', 'Unknown author') ?></p>
 ```
+
 This will output "Unknown author" if the `author` field does not exist.
 
 #### Field methods
+
 Fields can have methods that return specific values or formats. For example, if you have `publishDate` field of type `date` you have access to the method `format()` to control the output format.
 
 ```php
@@ -193,12 +203,15 @@ Fields can have methods that return specific values or formats. For example, if 
 This will output the publish date like "2025-07-05 15:48".
 
 You can instead use the `toDuration()` method to get a localized duration string:
+
 ```php
 <p class="duration"><?= $page->publishDate()->toDuration() ?></p>
 ```
+
 This will output a string like "2 months ago" or "in 3 days" depending on the current date and the publish date.
 
 Of course, you can also directly access the field. In this case, the field of type `date` uses a default format of `YYYY-MM-DD`.
+
 ```php
 <p class="duration"><?= $page->publishDate() ?></p>
 ```
@@ -206,15 +219,19 @@ Of course, you can also directly access the field. In this case, the field of ty
 You can find the available methods for each type in the [Fields](/reference/fields/) reference.
 
 ### Traversing the page tree
-You can traverse the page tree using the `$page` variable. These methods return either a single `Page` or `Site` object, or a collection of pages represented by the class <code><span class="type-name">Formwork\Pages\PageCollection</span></code>, depending on the method used.
+
+You can traverse the page tree using the `$page` variable. These methods return either a single `Page` or `Site` object, or a collection of pages represented by the class `Formwork\Pages\PageCollection`{.type-name}, depending on the method used.
 
 #### Children and descendants
+
 To access the children of the current page, you can use the `$page->children()` method, which returns a collection of child pages. You can also use the `$page->descendants()` method to get all descendants of the current page, including children, grandchildren, and so on.
+
 ```php
 <?php foreach ($page->children() as $child): ?>
     <a href="<?= $child->uri() ?>"><?= $this->escape($child->title()) ?></a>
 <?php endforeach ?>
 ```
+
 ```php
 <?php foreach ($page->descendants() as $descendant): ?>
     <a href="<?= $descendant->uri() ?>"><?= $this->escape($descendant->title()) ?></a>
@@ -222,10 +239,13 @@ To access the children of the current page, you can use the `$page->children()` 
 ```
 
 #### Parent and ancestors
+
 To access the parent page or the ancestors of the current page, you can use the `$page->parent()` method or the `$page->ancestors()` method, respectively.
+
 ```php
 <?= $this->escape($page->parent()->title()) ?>
 ```
+
 ```php
 <?php foreach ($page->ancestors() as $ancestor): ?>
     <a href="<?= $ancestor->uri() ?>"><?= $this->escape($ancestor->title()) ?></a>
@@ -233,8 +253,8 @@ To access the parent page or the ancestors of the current page, you can use the 
 ```
 
 > [!NOTE]
-> For top-level pages, the parent will be the `$site` object, which is an instance of <code><span class="type-name">Formwork\Cms\Site</span></code>.
-> The `$site` object is the root of the page tree, and returns <code><span class="type-null">null</span></code> when you call `$site->parent()`.
+> For top-level pages, the parent will be the `$site` object, which is an instance of `Formwork\Cms\Site`{.type-name}.
+> The `$site` object is the root of the page tree, and returns `null`{.type-null} when you call `$site->parent()`.
 
 If you need to check whether `$parent` is a site or a page, you can use the `$parent->isSite()` method:
 
@@ -247,12 +267,15 @@ If you need to check whether `$parent` is a site or a page, you can use the `$pa
 ```
 
 #### Siblings
+
 To access the siblings of the current page, you can use the `$page->siblings()` method, which returns a collection of sibling pages. You can also use the `$page->nextSibling()` and `$page->previousSibling()` methods to get the next and previous sibling pages, respectively.
+
 ```php
 <?php foreach ($page->siblings() as $sibling): ?>
     <a href="<?= $sibling->uri() ?>"><?= $sibling->title() ?></a>
 <?php endforeach ?>
 ```
+
 ```php
 <?php if ($page->previous()): ?>
     <p>Go to the previous page: <a href="<?= $page->previousSibling()->uri() ?>"><?= $page->previousSibling()->title() ?></a></p>
@@ -261,7 +284,8 @@ To access the siblings of the current page, you can use the `$page->siblings()` 
     <p>Go to the next page: <a href="<?= $page->nextSibling()->uri() ?>"><?= $page->nextSibling()->title() ?></a></p>
 <?php endif ?>
 ```
-If you need a collection with the siblings *and* the current page, you can use the `$page->inclusiveSiblings()` method and use the `$page->isCurrent()` to check if the page is the current one:
+
+If you need a collection with the siblings _and_ the current page, you can use the `$page->inclusiveSiblings()` method and use the `$page->isCurrent()` to check if the page is the current one:
 
 ```php
 <ol>
@@ -276,6 +300,7 @@ If you need a collection with the siblings *and* the current page, you can use t
 ```
 
 #### Filtering page collections
+
 In Formwork, collections are powerful objects that allow you to filter, sort, and manipulate their items easily.
 
 In particular, in `PageCollection` objects you can use methods like `listed()`, `published()`, `allowingChildren()`, etc.
@@ -294,8 +319,8 @@ You can use the `filterBy()` method to filter pages based on a custom condition.
 
 This method accepts one or two argument:
 
-* The first argument is a field that has to be present to include the page in the collection.
-* The second argument is an optional value to match against the field. If not provided it is `true`, meaning the collection will include all pages that have the field and does not return `null` or another *falsy* value (e.g. `false`, `0`, `''`).
+- The first argument is a field that has to be present to include the page in the collection.
+- The second argument is an optional value to match against the field. If not provided it is `true`, meaning the collection will include all pages that have the field and does not return `null` or another _falsy_ value (e.g. `false`, `0`, `''`).
 
 For example, you want to filter the pages that have "The Mysterious Magician" as `author`:
 
@@ -307,24 +332,28 @@ For example, you want to filter the pages that have "The Mysterious Magician" as
 
 > [!TIP]
 > You can use a closure to specify advanced filters:
+>
 > ```php
 > <?php foreach ($site->descendants()->filterBy('amountOfMagic', fn($value) => $value >= 100) as $page): ?>
 >     <!-- Do something with all pages that have an amount of magic greater than or equal to 100 -->
 > <?php endforeach ?>
 > ```
+>
 > In this example, the closure receives the value of the `amountOfMagic` field and returns `true` if the value is greater than or equal to 100, thus including the page in the collection.
 
 ## Layout, partials, and blocks
+
 Formwork templates support a flexible system of **layout**, **partials**, and **blocks** to help you organize templates and reuse code across different pages.
 
 ### The `$this` variable
 
-The `$this` variable in Formwork templates returns the instance of the underlying <code><span class="type-name">Formwork\Views\View</span></code> class, which is used to render the template.
+The `$this` variable in Formwork templates returns the instance of the underlying `Formwork\Views\View`{.type-name} class, which is used to render the template.
 
 It provides a set of methods and properties that help you manage the template rendering process, including including partials, defining blocks, and accessing utility functions.
 
 ### Setting the layout
-Your site usually has a common **layout**, which includes a **header**, **footer**, and a **content** area. Template files doesn't have to define the *entire* layout but the content area *only* and should instead specify a template layout which composes the entire page.
+
+Your site usually has a common **layout**, which includes a **header**, **footer**, and a **content** area. Template files doesn't have to define the _entire_ layout but the content area _only_ and should instead specify a template layout which composes the entire page.
 
 Layouts are defined in the `📂 site/templates/layouts/` folder and can be set in your template files using the `$this->layout()` method.
 
@@ -378,6 +407,7 @@ This tells Formwork to use the `site.php` layout for this template. The content 
 > In the example above we didn't use the short echo tag `<?=` to call `$this->layout()`, but the tag `<?php` since the method returns nothing to output (has a <code><span class="type-keyword">void</code> return type).
 
 ### Inserting partials
+
 Partials are **reusable** pieces of template code that can be inserted in templates. They are useful for defining common UI components, such as headers, footers, or sidebars, that you want to reuse across different pages.
 
 Template partials are stored in the `📂 site/templates/partials/` directory and can be inserted in your templates using the `$this->insert()` method.
@@ -433,6 +463,7 @@ Now we can insert these partials in the `site` layout using the `$this->insert()
 > - You don't need to specify the `.php` extension but if you do, it won't be added twice.
 
 #### Passing variables to partials
+
 You can pass variables to partials using the second argument of the `$this->insert()` method. This allows you to provide specific data that the partial can use when rendering.
 
 Imagine we have a partial named `info.php` (located in `site/templates/partials/page/info.php`) that displays meta information about a page, such as the author and publish date:
@@ -503,6 +534,7 @@ Then you can use it in your template like this:
 > - Variables passed to partials are not available in the parent template. If you need to access the same variable in the parent template, you must define it in the parent template's scope.
 
 ### Defining blocks
+
 Blocks are a way to define sections of a template that can be reused within the template. They are useful for keeping the code simple in the case of alternative layouts.
 
 You can define a block using the `$this->define()` method. This starts capturing the rendered contents until you call `$this->end()`. Then you use the `$this->block()` method to render the block content.
@@ -542,14 +574,16 @@ For example, you can use the `main` block in this three-column layout, to condit
 ```
 
 > [!NOTE]
-> You are not allowed to use <code>content</code> as a block name, because it is reserved for the main content of the page. If you try to define a block named <code>content</code>, a <code><span class="type-name">Formwork\View\Exceptions\RenderingException</span></code> is thrown.
+> You are not allowed to use <code>content</code> as a block name, because it is reserved for the main content of the page. If you try to define a block named <code>content</code>, a `Formwork\View\Exceptions\RenderingException`{.type-name} is thrown.
 
 ## Template methods
+
 Formwork provides a set of **template methods** that can be used to simplify common tasks in templates. These methods are also available through the `$this` variable.
 
 You can find the complete list of template methods in the [Template methods](/reference/template-methods/) reference.
 
 ### Escaping output
+
 When outputting values in templates, it is important to escape them to prevent XSS attacks and ensure that the output is safe for HTML rendering.
 Formwork provides the `$this->escape()` method to escape output. This method internally uses the `htmlspecialchars()` function to convert special characters to HTML entities.
 
@@ -557,18 +591,18 @@ For example, to safely output a page title, you can use:
 
 ```php
 <h1><?= $this->escape($page->title()) ?></h1>
-``` 
+```
 
 > [!CAUTION]
 > Always escape user-generated or dynamic content before rendering it in HTML. Failing to do so can expose your site to cross-site scripting (XSS) vulnerabilities.
 
 ### Working with template assets
+
 Formwork provides methods to work with the template assets, such as images, stylesheets, and scripts.
 
 Template assets are stored in the `📂 site/templates/assets/` directory.
 
 You can use the `$this->asset()` method to generate URIs for assets in your templates.
-
 
 For example, to include a stylesheet in your template, you can use:
 
@@ -584,10 +618,11 @@ Assets are **versioned** based on their modification time. Yo can use the `inclu
 
 > [!NOTE]
 > Non-versioned assets are <strong>not cached</strong> by the browser. It is recommended to always set <code>includeVersion: true</code>, especially in production environments as it increases performance and reduce network usage.</p>
+
 </div>
 
-
 #### Collecting assets
+
 You can use the `$this->assets()` method to collect assets in your templates. This is useful when you want to include multiple assets in your template without knowing beforehand which ones will be needed.
 
 For example, you can collect stylesheets and scripts in your templates or partials like this:
@@ -595,6 +630,7 @@ For example, you can collect stylesheets and scripts in your templates or partia
 ```php
 <?php $this->assets()->add('css/style.css') ?>
 ```
+
 ```php
 <?php $this->assets()->add('js/script.js') ?>
 ```
@@ -606,6 +642,7 @@ And then in your layout, you can render the collected assets:
     <link rel="stylesheet" href="<?= $stylesheet->uri(includeVersion: true) ?>">
 <?php endforeach ?>
 ```
+
 ```php
 <?php foreach ($this->assets()->scripts() as $script): ?>
     <script src="<?= $script->uri(includeVersion: true) ?>"></script>
@@ -613,6 +650,7 @@ And then in your layout, you can render the collected assets:
 ```
 
 ## Template controllers
+
 Formwork allows you to use **template controllers** to separate the logic from the presentation in your templates. Template controllers are PHP files that are executed before the template is rendered, allowing you to prepare data and perform any necessary logic.
 
 Template controllers are stored in the `📂 site/templates/controllers/` folder and are named after the template they control. For example, if you have a template named `blog.php`, you can create a controller named `blog.php` in the `📂 site/templates/controllers/` directory.

@@ -1,8 +1,9 @@
 ---
-title: 'Getting started'
-description: 'Follow the steps to install Formwork, set up your project, and understand the basics to get your site up and running quickly.'
+title: "Getting started"
+description: "Follow the steps to install Formwork, set up your project, and understand the basics to get your site up and running quickly."
 prevNext: true
 ---
+
 Formwork is a flat-file CMS designed to be fast, flexible, and easy to use, without the need for a database.
 
 This guide will walk you through installing and running Formwork on your local machine or server.
@@ -11,8 +12,8 @@ This guide will walk you through installing and running Formwork on your local m
 
 To run Formwork, your server environment must meet the following requirements:
 
-* PHP **8.3** or higher
-* PHP extensions: `dom`, `fileinfo`, `gd`, `mbstring`, `openssl` and `zip`
+- PHP **8.3** or higher
+- PHP extensions: `dom`, `exif`, `fileinfo`, `filter`, `gd`, `libxml`, `mbstring`, `openssl`, `session`, `tokenizer`, `zip`, `zlib`
 
 > [!TIP]
 > You can check if your PHP installation meets these requirements by running `php -m` to list loaded extensions.
@@ -26,9 +27,9 @@ You can install Formwork in two main ways: using a **prebuilt release** or via t
 
 ### Downloading a prebuilt GitHub release
 
-* Visit the latest [Formwork release page on GitHub](https://github.com/getformwork/formwork/releases/latest).
-* Download the `formwork-2.x.x.zip` archive.
-* Extract the contents into your project folder or in the webroot of your server (e.g., `htdocs/`, or `www/`).
+- Visit the latest [Formwork release page on GitHub](https://github.com/getformwork/formwork/releases/latest).
+- Download the `formwork-2.x.x.zip` archive.
+- Extract the contents into your project folder or in the webroot of your server (e.g., `htdocs/`, or `www/`).
 
 That's it — Formwork is ready to run. You can now access it from your browser.
 
@@ -59,23 +60,24 @@ Once installed, you can open the project in your browser or use the built-in ser
 > [!NOTE]
 > This step is only necessary if you installed Formwork via Composer. If you downloaded the prebuilt release, the assets are already built.
 
-* Install [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/)
-* Navigate to the `📂 panel` directory:
+- Install [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/)
+- Navigate to the `📂 panel` directory:
 
-   ```shell
-   cd panel
-   ```
-* Install dependencies:
+    ```shell
+    cd panel
+    ```
 
-   ```shell
-   pnpm install
-   ```
-* Build the assets:
+- Install dependencies:
 
-   ```shell
-   pnpm build
-   ```
+    ```shell
+    pnpm install
+    ```
 
+- Build the assets:
+
+    ```shell
+    pnpm build
+    ```
 
 ## Running Formwork server
 
@@ -144,51 +146,52 @@ You will need to rewrite all requests to non-existing files to `index.php` and b
 
 Here's a quick look at the main folders in a typical Formwork installation:
 
-| Folder                           | Description |
-|------------------------------------------------------------|-------------|
-| `📂 assets`                      | <span class="badge badge-yellow">Since 2.3.2</span> Contains cached assets that should be served directly by the web server to speed up page load times and avoid unnecessary processing. |
-| `📂 backup`                      | Stores backups of the site content and configuration|
-| `📂 bin`                         | Contains CLI tools, including the development server (`serve`). |
-| `📂 cache`                       | Stores cached data (pages, config, images, etc.)|
-| `📂 formwork`                    | Core Formwork application files. Should not be modified directly. |
-| `📂 logs`                        | <span class="badge badge-yellow">Since 2.3.0</span> Application logs. |
-| `📂 panel`                       | Administration panel resources. Should not be modified directly. |
-| `📂 site`                        | Main directory for all site-specific content and configuration. |
-| `📂 vendor`                      | Composer-managed dependencies. Do not edit manually. |
-
+| Folder        | Description                                                                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `📂 assets`   | **Since 2.3.2**{.badge .badge-yellow} Contains cached assets that should be served directly by the web server to speed up page load times and avoid unnecessary processing. |
+| `📂 backup`   | Stores backups of the site content and configuration                                                                                                                        |
+| `📂 bin`      | Contains CLI tools, including the development server (`serve`).                                                                                                             |
+| `📂 cache`    | Stores cached data (pages, config, images, etc.)                                                                                                                            |
+| `📂 formwork` | Core Formwork application files. Should not be modified directly.                                                                                                           |
+| `📂 logs`     | **Since 2.3.0**{.badge .badge-yellow} Application logs.                                                                                                                     |
+| `📂 panel`    | Administration panel resources. Should not be modified directly.                                                                                                            |
+| `📂 site`     | Main directory for all site-specific content and configuration.                                                                                                             |
+| `📂 vendor`   | Composer-managed dependencies. Do not edit manually.                                                                                                                        |
 
 > [!NOTE]
+>
 > - You should not modify files in these directories directly, except for the `📂 site` folder.
 > - The `📂 formwork` and `📂 panel` directories contain the core application code and should be left intact to ensure proper functionality.
 > - Updates can overwrite changes in these directories, so it is best to keep customizations in the `📂 site` folder.
 
 ### Site folder structure
+
 The `site` folder is where you will spend most of your time while building your Formwork site. It contains all the content, configuration, templates, and user data for your site:
 
-| Folder                           | Description |
-|----------------------------------|-------------|
-| `📂 site/auth`                   | <span class="badge badge-yellow">Since 2.3.0</span> Authentication-related logs. It must not be committed to version control for security reasons. |
-| `📂 site/config`                 | System and site configuration files (`system.yaml`, `site.yaml`). |
-| `📂 site/files`                  | Uploaded global files (e.g. media not tied to a specific page or template). |
-| `📂 site/pages`                  | Page folders with content (`.md`), metadata, and files. |
-| `📂 site/plugins`                | <span class="badge badge-yellow">Since 2.3.0</span> Custom plugins to extend Formwork functionality. |
-| `📂 site/schemes`                | Schemes that define structure for pages, users, files, and config. |
-| `📂 site/schemes/config`         | Schemes for the config fields shown in the Panel. |
-| `📂 site/schemes/files`          | Schemes for file metadata (e.g. title, description). |
-| `📂 site/schemes/pages`          | Schemes for individual page types. |
-| `📂 site/schemes/users`          | Schemes for user accounts and roles. |
-| `📂 site/sessions`               | <span class="badge badge-yellow">Since 2.3.0</span> Session-related data. It must not be committed to version control for security reasons.  |
-| `📂 site/statistics`             | Stores site visits statistics. |
-| `📂 site/templates`              | PHP templates used to render pages on the frontend. |
-| `📂 site/templates/assets`       | Template-specific CSS, JS, or media assets. |
-| `📂 site/templates/controllers`  | PHP controllers to add logic for specific templates. |
-| `📂 site/templates/layouts`      | Layouts to structure HTML across templates. |
-| `📂 site/templates/partials`     | Reusable template fragments (partials) for headers, footers, etc. |
-| `📂 site/translations`           | Custom translation files to extend the available language strings. |
-| `📂 site/users`                  | User-related data and configuration. |
-| `📂 site/users/accounts`         | YAML files for user accounts. |
-| `📂 site/users/images`           | Profile images for users. |
-| `📂 site/users/roles`            | Role definitions for access control in the Panel. |
+| Folder                          | Description                                                                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `📂 site/auth`                  | **Since 2.3.0**{.badge .badge-yellow} Authentication-related logs. It must not be committed to version control for security reasons. |
+| `📂 site/config`                | System and site configuration files (`system.yaml`, `site.yaml`).                                                                    |
+| `📂 site/files`                 | Uploaded global files (e.g. media not tied to a specific page or template).                                                          |
+| `📂 site/pages`                 | Page folders with content (`.md`), metadata, and files.                                                                              |
+| `📂 site/plugins`               | **Since 2.3.0**{.badge .badge-yellow} Custom plugins to extend Formwork functionality.                                               |
+| `📂 site/schemes`               | Schemes that define structure for pages, users, files, and config.                                                                   |
+| `📂 site/schemes/config`        | Schemes for the config fields shown in the Panel.                                                                                    |
+| `📂 site/schemes/files`         | Schemes for file metadata (e.g. title, description).                                                                                 |
+| `📂 site/schemes/pages`         | Schemes for individual page types.                                                                                                   |
+| `📂 site/schemes/users`         | Schemes for user accounts and roles.                                                                                                 |
+| `📂 site/sessions`              | **Since 2.3.0**{.badge .badge-yellow} Session-related data. It must not be committed to version control for security reasons.        |
+| `📂 site/statistics`            | Stores site visits statistics.                                                                                                       |
+| `📂 site/templates`             | PHP templates used to render pages on the frontend.                                                                                  |
+| `📂 site/templates/assets`      | Template-specific CSS, JS, or media assets.                                                                                          |
+| `📂 site/templates/controllers` | PHP controllers to add logic for specific templates.                                                                                 |
+| `📂 site/templates/layouts`     | Layouts to structure HTML across templates.                                                                                          |
+| `📂 site/templates/partials`    | Reusable template fragments (partials) for headers, footers, etc.                                                                    |
+| `📂 site/translations`          | Custom translation files to extend the available language strings.                                                                   |
+| `📂 site/users`                 | User-related data and configuration.                                                                                                 |
+| `📂 site/users/accounts`        | YAML files for user accounts.                                                                                                        |
+| `📂 site/users/images`          | Profile images for users.                                                                                                            |
+| `📂 site/users/roles`           | Role definitions for access control in the Panel.                                                                                    |
 
 ## Accessing the Panel
 
